@@ -1,5 +1,6 @@
 ---
-
+import "@/styles/base.css";
+import { Button } from "@/components/ui/button";
 ---
 
 <html lang="en">
@@ -8,9 +9,12 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Research Portal</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<div class="container mx-auto flex flex-col gap-3 items-center mt-24">
+			<h1 class="text-3xl font-black">Welcome to Research Portal</h1>
+			<Button>Click Me</Button>
+		</div>
 	</body>
 </html>
