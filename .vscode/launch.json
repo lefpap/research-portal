@@ -2,8 +2,8 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "./node_modules/.bin/astro dev",
-      "name": "Development server",
+      "command": "./astro-ssg/node_modules/.bin/astro dev",
+      "name": "Launch SSG",
       "request": "launch",
       "type": "node-terminal"
     }
