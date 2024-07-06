@@ -1,0 +1,26 @@
+---
+import "@/styles/base.css";
+import type { ComponentProps } from "astro/types";
+import BaseHead from "@/layouts/BaseHead.astro";
+
+interface Props extends ComponentProps<typeof BaseHead> {
+  layoutClasses?: string;
+}
+
+const { title, description, layoutClasses } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description}>
+      <slot name="head" />
+    </BaseHead>
+  </head>
+  <body class="grid h-screen grid-rows-[auto_1fr_auto]">
+    <header>Heaeder</header>
+    <main class:list={["", layoutClasses]}>
+      <slot />
+    </main>
+    <footer>Footer</footer>
+  </body>
+</html>
