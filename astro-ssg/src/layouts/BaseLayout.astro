@@ -10,7 +10,7 @@ interface Props extends ComponentProps<typeof BaseHead> {
 const { title, description, layoutClasses } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <BaseHead title={title} description={description}>
       <slot name="head" />
