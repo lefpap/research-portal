@@ -4,48 +4,53 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { ChevronDownIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-type Link = {
-  name: string;
-  href: string;
-};
-
-type MenuLink = {
-  name: string;
-  links: Link[];
-};
+import { cn, normalizePath } from "@/lib/utils";
+import type { HeaderLinkItem, LinkItem, MenuLinkItem } from "./Header";
 
 type HeaderLinkProps = {
-  link: Link | MenuLink;
+  link: HeaderLinkItem;
 };
 
-// Type guard function to check if the link is of type MenuLink
-const isMenuLinkType = (link: Link | MenuLink): link is MenuLink => {
-  return (link as MenuLink).links !== undefined;
-};
-
-const normalizePath = (path: string) => {
-  return path.replace(/\/+$/, "").toLowerCase();
-};
-
-const isLinkActive = (link: Link, pathname: string) => {
+const isLinkActive = (link: LinkItem, pathname: string) => {
   return normalizePath(link.href) === normalizePath(pathname);
 };
 
+const isMenuLinkActive = (link: MenuLinkItem, pathname: string) => {
+  return link.links.some((sublink) => isLinkActive(sublink, pathname));
+};
+
+const isLink = (link: HeaderLinkItem): link is LinkItem => "href" in link;
+
 function HeaderLink({ link }: HeaderLinkProps) {
-  return isMenuLinkType(link) ? <MenuLink link={link} /> : <Link link={link} />;
+  return isLink(link) ? (
+    <Link
+      link={link}
+      className="px-4 py-2 text-sm hover:border-b-foreground"
+      activeClasses="font-bold"
+    />
+  ) : (
+    <MenuLink link={link} />
+  );
 }
 
-function Link({ link }: { link: Link }) {
+function Link({
+  link,
+  className,
+  activeClasses,
+}: {
+  link: LinkItem;
+  className?: string;
+  activeClasses?: string;
+}) {
   const isActive = isLinkActive(link, window.location.pathname);
 
   return (
     <a
       href={link.href}
       className={cn(
-        "border border-transparent px-4 py-2 text-sm transition hover:border-b-foreground",
-        { "font-bold": isActive },
+        "border border-transparent transition",
+        className,
+        isActive && activeClasses,
       )}
     >
       {link.name}
@@ -53,12 +58,10 @@ function Link({ link }: { link: Link }) {
   );
 }
 
-function MenuLink({ link }: { link: MenuLink }) {
+function MenuLink({ link }: { link: MenuLinkItem }) {
   const pathname = window.location.pathname;
 
-  const isActive = link.links.some((sublink) =>
-    isLinkActive(sublink, pathname),
-  );
+  const isActive = isMenuLinkActive(link, pathname);
 
   return (
     <HoverCard openDelay={100} closeDelay={100}>
@@ -80,19 +83,15 @@ function MenuLink({ link }: { link: MenuLink }) {
         align="start"
       >
         {link.links.map((sublink) => {
-          const isSublinkActive = isLinkActive(sublink, pathname);
-
           return (
-            <a
+            <Link
               key={sublink.name}
-              className={cn(
-                "border border-transparent px-4 py-3 text-sm transition hover:bg-foreground/10",
-                { "font-bold": isSublinkActive },
-              )}
-              href={sublink.href}
-            >
-              {sublink.name}
-            </a>
+              link={sublink}
+              className={
+                "border border-transparent px-4 py-3 text-sm hover:bg-foreground/10"
+              }
+              activeClasses="font-bold"
+            />
           );
         })}
       </HoverCardContent>
