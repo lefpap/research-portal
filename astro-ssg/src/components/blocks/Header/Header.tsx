@@ -6,13 +6,29 @@ import {
 } from "@/context/header.context";
 import NavMenu from "@/components/blocks/Header/NavMenu";
 import MobileMenu from "@/components/blocks/Header/MobileMenu";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface HeaderProps extends HeaderContextState {}
 
 function Header({ navLinks }: HeaderProps) {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isScrolled, setIsScrolled]);
+
   return (
     <HeaderProvider navLinks={navLinks}>
-      <header className="border-b">
+      <header
+        className={cn("border-b transition", {
+          "animate-appear sticky top-0 z-50 backdrop-blur-md": isScrolled,
+        })}
+      >
         <div className="container flex items-center justify-between gap-5 py-6">
           <div className="flex items-center justify-start gap-3">
             <MobileMenu className="block sm:hidden" />

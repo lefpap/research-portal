@@ -1,5 +1,4 @@
 ---
-import "@/styles/base.css";
 import type { ComponentProps } from "astro/types";
 import BaseHead from "@/layouts/BaseHead.astro";
 import Header from "@/components/blocks/Header/Header";
@@ -21,7 +20,7 @@ const { title, description, layoutClasses } = Astro.props;
   </head>
   <body class="grid h-screen grid-rows-[auto_1fr_auto]">
     <Header client:only="react" navLinks={NAV_LINKS} />
-    <main class:list={["", layoutClasses]}>
+    <main class:list={["my-11", layoutClasses]}>
       <slot />
     </main>
     <footer>Footer</footer>
