@@ -1,7 +1,8 @@
 ---
-import "@/styles/base.css";
 import type { ComponentProps } from "astro/types";
 import BaseHead from "@/layouts/BaseHead.astro";
+import Header from "@/components/blocks/Header/Header";
+import { NAV_LINKS } from "@/lib/consts";
 
 interface Props extends ComponentProps<typeof BaseHead> {
   layoutClasses?: string;
@@ -10,7 +11,7 @@ interface Props extends ComponentProps<typeof BaseHead> {
 const { title, description, layoutClasses } = Astro.props;
 ---
 
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <BaseHead title={title} description={description}>
       <slot name="head" />
@@ -18,8 +19,8 @@ const { title, description, layoutClasses } = Astro.props;
     </BaseHead>
   </head>
   <body class="grid h-screen grid-rows-[auto_1fr_auto]">
-    <header>Heaeder</header>
-    <main class:list={["", layoutClasses]}>
+    <Header client:only="react" navLinks={NAV_LINKS} />
+    <main class:list={["my-11", layoutClasses]}>
       <slot />
     </main>
     <footer>Footer</footer>
