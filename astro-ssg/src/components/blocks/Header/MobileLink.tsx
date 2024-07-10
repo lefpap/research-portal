@@ -1,4 +1,8 @@
-import type { HeaderLinkItem, LinkItem, MenuLinkItem } from "./Header";
+import type {
+  HeaderLinkItem,
+  LinkItem,
+  MenuLinkItem,
+} from "@/context/header.context";
 import { cn, normalizePath } from "@/lib/utils";
 import { ArrowLeftIcon } from "lucide-react";
 

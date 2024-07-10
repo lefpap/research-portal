@@ -9,26 +9,18 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import {
-  ArrowLeftIcon,
-  MenuIcon,
-  SearchIcon,
-  SunIcon,
-  XIcon,
-} from "lucide-react";
+import { MenuIcon, SearchIcon, SunIcon, XIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { HeaderLinkItems, HeaderLinkItem } from "./Header";
+import type { HeaderLinkItems } from "@/context/header.context";
 import MobileLink from "./MobileLink";
+import { useHeaderCtx } from "@/hooks/useHeaderCtx.hook";
 
 interface NavMenuProps {
-  navLinks: HeaderLinkItems;
   className?: string;
 }
 
-const isLink = (link: HeaderLinkItem) => "href" in link;
-
-function MobileMenu({ navLinks, className }: NavMenuProps) {
-  // const { navLinks } = useNavbarContext();
+function MobileMenu({ className }: NavMenuProps) {
+  const { navLinks } = useHeaderCtx();
 
   return (
     <div className={cn("", className)}>
@@ -105,4 +97,4 @@ function MobileMenu({ navLinks, className }: NavMenuProps) {
   );
 }
 
-export { MobileMenu };
+export default MobileMenu;

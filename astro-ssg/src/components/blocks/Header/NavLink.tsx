@@ -5,9 +5,13 @@ import {
 } from "@/components/ui/hover-card";
 import { ChevronDownIcon } from "lucide-react";
 import { cn, normalizePath } from "@/lib/utils";
-import type { HeaderLinkItem, LinkItem, MenuLinkItem } from "./Header";
+import type {
+  HeaderLinkItem,
+  LinkItem,
+  MenuLinkItem,
+} from "@/context/header.context";
 
-type HeaderLinkProps = {
+type NavLinkProps = {
   link: HeaderLinkItem;
 };
 
@@ -21,7 +25,7 @@ const isMenuLinkActive = (link: MenuLinkItem, pathname: string) => {
 
 const isLink = (link: HeaderLinkItem): link is LinkItem => "href" in link;
 
-function HeaderLink({ link }: HeaderLinkProps) {
+function NavLink({ link }: NavLinkProps) {
   return isLink(link) ? (
     <Link
       link={link}
@@ -99,4 +103,4 @@ function MenuLink({ link }: { link: MenuLinkItem }) {
   );
 }
 
-export default HeaderLink;
+export default NavLink;
