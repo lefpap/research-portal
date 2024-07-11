@@ -71,13 +71,13 @@ function MenuLink({ link }: { link: MenuLinkItem }) {
     <HoverCard openDelay={100} closeDelay={100}>
       <HoverCardTrigger
         className={cn(
-          "flex cursor-pointer items-center border border-transparent px-4 py-2 text-sm transition hover:border-b-foreground data-[state=open]:border-b-foreground",
+          "group flex cursor-pointer items-center border border-transparent px-4 py-2 text-sm transition hover:border-b-foreground data-[state=open]:border-b-foreground",
           { "font-bold": isActive },
         )}
       >
         {link.name}
         <ChevronDownIcon
-          className="ml-2 size-3.5"
+          className="ml-2 size-3.5 transition group-data-[state=open]:-rotate-180"
           strokeWidth={isActive ? 3 : 2}
         />
       </HoverCardTrigger>
