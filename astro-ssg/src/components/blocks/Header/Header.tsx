@@ -8,6 +8,7 @@ import NavMenu from "@/components/blocks/Header/NavMenu";
 import MobileMenu from "@/components/blocks/Header/MobileMenu";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import ThemeToggle from "@/components/utility/ThemeToggle";
 
 interface HeaderProps extends HeaderContextState {}
 
@@ -26,7 +27,7 @@ function Header({ navLinks }: HeaderProps) {
     <HeaderProvider navLinks={navLinks}>
       <header
         className={cn("border-b transition", {
-          "animate-appear sticky top-0 z-50 backdrop-blur-md": isScrolled,
+          "sticky top-0 z-50 animate-appear backdrop-blur-md": isScrolled,
         })}
       >
         <div className="container flex items-center justify-between gap-5 py-6">
@@ -43,9 +44,12 @@ function Header({ navLinks }: HeaderProps) {
             <Button variant={"outline"} size={"icon"} className="rounded-full">
               <SearchIcon className="size-5" />
             </Button>
-            <Button variant={"outline"} size={"icon"} className="rounded-full">
-              <SunIcon className="size-5" />
-            </Button>
+            <ThemeToggle
+              variant={"outline"}
+              size={"icon"}
+              className="rounded-full"
+              iconProps={{ className: "size-5" }}
+            />
             <Button variant={"outline"} size={"icon"} className="rounded-full">
               <svg className="size-5">
                 <use href={`/icons/flags.svg#el`}></use>
