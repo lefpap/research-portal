@@ -13,10 +13,7 @@ const { title, description, layoutClasses } = Astro.props;
 
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description}>
-      <slot name="head" />
-      <script is:inline src="/js/theme-loader.js"></script>
-    </BaseHead>
+    <BaseHead title={title} description={description} />
   </head>
   <body class="grid h-screen grid-rows-[auto_1fr_auto]">
     <Header client:only="react" navLinks={NAV_LINKS} />
