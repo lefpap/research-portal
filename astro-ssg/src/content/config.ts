@@ -1,8 +1,8 @@
-import { authors, articles, projects, publications } from "@/content/schemas";
+import { authors, news, projects, publications } from "@/content/schemas";
 
 export const collections = {
   authors,
-  articles,
+  news,
   projects,
   publications,
 };
