@@ -35,7 +35,7 @@ export const authors = defineCollection({
     }),
 });
 
-export const articles = defineCollection({
+export const news = defineCollection({
   type: "content",
   schema: ({ image }) =>
     z.object({
@@ -44,8 +44,12 @@ export const articles = defineCollection({
       status: z.enum(["draft", "published"]),
       publisedAt: z.date(),
       coverImage: image(),
+      source: z.object({
+        url: z.string().url(),
+        name: z.string(),
+      }),
       author: reference("authors"),
-      contributors: z.array(z.string()).optional(),
+      tags: z.array(z.string()).optional(),
     }),
 });
 
@@ -56,6 +60,7 @@ export const projects = defineCollection({
     description: z.string(),
     status: z.enum(["draft", "published"]),
     author: reference("authors"),
+    tags: z.array(z.string()).optional(),
     contributors: z.array(z.string()).optional(),
     repo: z.string().url().optional(),
     demo: z.string().url().optional(),
@@ -70,6 +75,7 @@ export const publications = defineCollection({
     status: z.enum(["draft", "published"]),
     publishedAt: z.date(),
     author: reference("authors"),
+    tags: z.array(z.string()).optional(),
     contributors: z.array(z.string()).optional(),
     url: z.string().url().optional(),
     doi: z.string().url().optional(),
