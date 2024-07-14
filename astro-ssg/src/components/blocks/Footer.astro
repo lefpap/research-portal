@@ -1,0 +1,18 @@
+---
+import Copyright from "@/components/utility/Copyright";
+
+interface Props {
+  className?: string;
+}
+
+const { className } = Astro.props;
+---
+
+<footer
+  class:list={[
+    "bg- flex items-center justify-center border-t py-16",
+    className,
+  ]}
+>
+  <Copyright />
+</footer>

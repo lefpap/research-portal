@@ -2,6 +2,8 @@
 import type { ComponentProps } from "astro/types";
 import BaseHead from "@/layouts/BaseHead.astro";
 import Header from "@/components/blocks/Header/Header";
+import Footer from "@/components/blocks/Footer.astro";
+
 import { NAV_LINKS } from "@/lib/consts";
 
 interface Props extends ComponentProps<typeof BaseHead> {
@@ -20,6 +22,6 @@ const { title, description, layoutClasses } = Astro.props;
     <main class:list={["my-11", layoutClasses]}>
       <slot />
     </main>
-    <footer>Footer</footer>
+    <Footer />
   </body>
 </html>
