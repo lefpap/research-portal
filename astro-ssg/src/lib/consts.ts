@@ -5,24 +5,24 @@ export const NAV_LINKS = [
   },
   {
     name: "Team",
+    href: "/team",
+  },
+  {
+    name: "Posts",
     links: [
       {
-        name: "Meet The Team",
-        href: "/team",
+        name: "News",
+        href: "/news",
       },
       {
         name: "Projects",
-        href: "/team/projects",
+        href: "/projects",
       },
       {
         name: "Publications",
-        href: "/team/publications",
+        href: "/publications",
       },
     ],
-  },
-  {
-    name: "News",
-    href: "/news",
   },
   {
     name: "Contact",

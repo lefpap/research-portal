@@ -16,7 +16,7 @@ function Header({ navLinks }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    const handleScroll = () => setIsScrolled(window.scrollY > 0);
 
     window.addEventListener("scroll", handleScroll);
 
@@ -26,8 +26,8 @@ function Header({ navLinks }: HeaderProps) {
   return (
     <HeaderProvider navLinks={navLinks}>
       <header
-        className={cn("border-b transition", {
-          "sticky top-0 z-50 animate-appear backdrop-blur-md": isScrolled,
+        className={cn("sticky top-0 z-50 transition", {
+          "border-b saturate-100 backdrop-blur-md": isScrolled,
         })}
       >
         <div className="container flex items-center justify-between gap-5 py-6">
