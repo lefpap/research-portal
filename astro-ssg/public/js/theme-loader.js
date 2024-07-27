@@ -13,8 +13,6 @@ const applyTheme = (document, theme) => {
 };
 
 const setupObserver = (document) => {
-  console.log("Setting up observer");
-
   const observer = new MutationObserver(() => {
     const isDark = document.documentElement.classList.contains("dark");
     localStorage.setItem("theme", isDark ? "dark" : "light");

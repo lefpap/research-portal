@@ -8,7 +8,7 @@ export const authors = defineCollection({
       firstname: z.string(),
       lastname: z.string(),
       bio: z.string(),
-      avatar: image().or(z.string().url()),
+      avatar: z.string().default("/images/avatar-placeholder.png"),
       experience: z
         .array(
           z.object({
@@ -40,10 +40,10 @@ export const news = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      description: z.string(),
-      status: z.enum(["draft", "published"]),
-      publisedAt: z.date(),
-      coverImage: image(),
+      summary: z.string(),
+      status: z.enum(["draft", "published"]).default("draft"),
+      publishedAt: z.date(),
+      coverImage: z.string().default("/images/post-placeholder.png"),
       source: z.object({
         url: z.string().url(),
         name: z.string(),

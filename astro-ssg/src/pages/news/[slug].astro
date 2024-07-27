@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, getEntry } from "astro:content";
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+
+export const getStaticPaths = (async () => {
+  const news = await getCollection(
+    "news",
+    ({ data }) => data.status === "published",
+  );
+
+  return news.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}) satisfies GetStaticPaths;
+
+const { article } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await article.render();
+const minutesRead = remarkPluginFrontmatter.minutesRead as number;
+---
+
+<ArticleLayout title={article.slug} article={article} minutesRead={minutesRead}>
+  <Content />
+</ArticleLayout>

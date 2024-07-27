@@ -1,0 +1,28 @@
+---
+import NewsDisplay from "@/components/blocks/News/NewsDisplay";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const news = await getCollection(
+  "news",
+  ({ data }) => data.status === "published",
+);
+
+const uniqueTags = [...new Set(news.flatMap((article) => article.data.tags))]
+  .filter((tag) => tag !== undefined)
+  .sort((a, b) => a.localeCompare(b));
+---
+
+<BaseLayout title="News">
+  <section>
+    <div class="container">
+      <h1 class="text-center text-4xl font-black">Read our News</h1>
+      <NewsDisplay
+        initialNews={news}
+        tags={uniqueTags}
+        className="mt-11"
+        client:visible
+      />
+    </div>
+  </section>
+</BaseLayout>

@@ -17,7 +17,7 @@ const { title, description, layoutClasses } = Astro.props;
   <head>
     <BaseHead title={title} description={description} />
   </head>
-  <body class="grid h-screen grid-rows-[auto_1fr_auto]">
+  <body class="grid min-h-screen grid-rows-[auto_1fr_auto]">
     <Header client:only="react" navLinks={NAV_LINKS} />
     <main class:list={["my-11", layoutClasses]}>
       <slot />
