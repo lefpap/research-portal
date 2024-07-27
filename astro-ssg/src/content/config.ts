@@ -1,4 +1,18 @@
-import { authors, news, projects, publications } from "@/content/schemas";
+import { defineCollection } from "astro:content";
+import {
+  AuthorSchema,
+  ArticleSchema,
+  ProjectSchema,
+  PublicationSchema,
+} from "@/content/schema";
+
+const authors = defineCollection({ type: "data", schema: AuthorSchema });
+const news = defineCollection({ type: "content", schema: ArticleSchema });
+const projects = defineCollection({ type: "content", schema: ProjectSchema });
+const publications = defineCollection({
+  type: "content",
+  schema: PublicationSchema,
+});
 
 export const collections = {
   authors,
