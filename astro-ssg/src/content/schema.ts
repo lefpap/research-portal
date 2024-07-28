@@ -5,7 +5,7 @@ export const ExperienceSchema = z.object({
   company: z.string(),
   description: z.string(),
   start: z.date(),
-  end: z.date().or(z.string().nullable()),
+  end: z.date().optional(),
   current: z.boolean().optional().default(false),
 });
 
@@ -13,7 +13,7 @@ export const EducationSchema = z.object({
   degree: z.string(),
   institution: z.string(),
   start: z.date(),
-  end: z.date(),
+  end: z.date().optional(),
   description: z.string(),
 });
 
@@ -42,7 +42,7 @@ export const ArticleSchema = z.object({
 
 export const ProjectSchema = z.object({
   title: z.string(),
-  description: z.string(),
+  summary: z.string(),
   status: z.enum(["draft", "published"]).default("draft"),
   author: reference("authors"),
   tags: z.array(z.string()).optional(),
@@ -53,15 +53,15 @@ export const ProjectSchema = z.object({
 
 export const PublicationSchema = z.object({
   title: z.string(),
-  description: z.string(),
+  summary: z.string(),
   status: z.enum(["draft", "published"]).default("draft"),
   publishedAt: z.date(),
   author: reference("authors"),
+  cite: z.string(),
+  doi: z.string().url(),
+  links: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
   contributors: z.array(z.string()).optional(),
-  url: z.string().url().optional(),
-  doi: z.string().url().optional(),
-  pdf: z.string().url().optional(),
 });
 
 export type Experience = z.infer<typeof ExperienceSchema>;
