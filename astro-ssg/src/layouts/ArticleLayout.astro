@@ -62,8 +62,8 @@ const { article, minutesRead, ...rest } = Astro.props;
             <span>{`${minutesRead} min read`}</span>
           </span>
         </div>
-        <h1 class="">{article.data.title}</h1>
-        <p class="">{article.data.summary}</p>
+        <h1>{article.data.title}</h1>
+        <p>{article.data.summary}</p>
         <img
           src={article.data.coverImage}
           alt={article.id}

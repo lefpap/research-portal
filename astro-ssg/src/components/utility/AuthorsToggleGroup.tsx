@@ -5,37 +5,39 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ChevronsUpDownIcon, RefreshCwIcon } from "lucide-react";
+import { ChevronsUpDownIcon, RefreshCwIcon, UserPenIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import type { CollectionEntry } from "astro:content";
 
 interface TagsToggleGroupProps {
-  tags: string[];
+  authors: CollectionEntry<"authors">[];
   label: string;
-  onChange?: (tags?: string[]) => void;
+  onChange?: (authors?: string[]) => void;
   className?: string;
 }
 
-function TagsToggleGroup({
-  tags,
+function AuthorsToggleGroup({
+  authors,
   label,
   className,
   onChange,
 }: TagsToggleGroupProps) {
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const handleTagsChange = (tags?: string[]) => {
-    if (!tags || tags.length === 0) {
-      setSelectedTags([]);
+  const [authorIds, setAuthorIds] = useState<string[]>([]);
+
+  const handleAuthorChange = (ids?: string[]) => {
+    if (!ids || ids.length === 0) {
+      setAuthorIds([]);
       onChange?.(undefined);
       return;
     }
 
-    setSelectedTags(tags);
-    onChange?.(tags);
+    setAuthorIds(ids);
+    onChange?.(ids);
   };
 
   const handleClearSelectedTags = () => {
-    setSelectedTags([]);
+    setAuthorIds([]);
     onChange?.(undefined);
   };
 
@@ -64,19 +66,20 @@ function TagsToggleGroup({
       <CollapsibleContent>
         <ToggleGroup
           type="multiple"
-          className={"flex flex-wrap items-center justify-start"}
-          onValueChange={handleTagsChange}
-          value={selectedTags}
+          className={"flex-col items-start justify-start"}
+          onValueChange={handleAuthorChange}
+          value={authorIds}
         >
-          {tags.map((tag, index) => (
+          {authors.map((author, index) => (
             <ToggleGroupItem
               key={index}
-              value={tag}
+              value={author.id}
               variant={"primary"}
               size={"sm"}
-              className="flex-shrink-0 text-xs font-bold capitalize"
+              className="flex w-full max-w-xs flex-shrink-0 items-center justify-start gap-3 text-xs font-bold capitalize"
             >
-              {tag}
+              <UserPenIcon className="size-4 shrink-0" />
+              {`${author.data.firstname} ${author.data.lastname}`}
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
@@ -85,4 +88,4 @@ function TagsToggleGroup({
   );
 }
 
-export default TagsToggleGroup;
+export default AuthorsToggleGroup;
