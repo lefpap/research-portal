@@ -14,15 +14,15 @@ function NewsGrid({ className }: NewsGridProps) {
     <CollectionOrEmptyMessage
       collection={news}
       emptyMessage={
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="w-full text-center text-sm text-muted-foreground">
           No news to display
         </p>
       }
     >
-      <ul className={cn("grid grid-cols-2 items-stretch gap-10", className)}>
+      <ul className={cn("grid items-stretch gap-10", className)}>
         {news.map((article) => {
           return (
-            <li key={article.id} className="col-span-2">
+            <li key={article.id} className="overflow-x-hidden">
               <NewsCard article={article} className="" />
             </li>
           );

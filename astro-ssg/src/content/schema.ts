@@ -17,11 +17,20 @@ export const EducationSchema = z.object({
   description: z.string(),
 });
 
+export const ExternalAuthorSchema = z.object({
+  fullname: z.string(),
+  url: z.string().url().optional(),
+});
+
+export const ExternalLinkSchema = z.object({
+  name: z.string(),
+  url: z.string().url(),
+});
+
 export const AuthorSchema = z.object({
   email: z.string().email(),
   firstname: z.string(),
   lastname: z.string(),
-  bio: z.string(),
   avatar: z.string().default("/images/avatar-placeholder.png"),
   experience: z.array(ExperienceSchema).optional(),
   education: z.array(EducationSchema).optional(),
@@ -33,10 +42,7 @@ export const ArticleSchema = z.object({
   status: z.enum(["draft", "published"]).default("draft"),
   publishedAt: z.date(),
   coverImage: z.string().default("/images/post-placeholder.png"),
-  source: z.object({
-    url: z.string().url(),
-    name: z.string(),
-  }),
+  source: ExternalLinkSchema,
   tags: z.array(z.string()).optional(),
 });
 
@@ -56,12 +62,11 @@ export const PublicationSchema = z.object({
   summary: z.string(),
   status: z.enum(["draft", "published"]).default("draft"),
   publishedAt: z.date(),
-  author: reference("authors"),
+  authors: z.array(reference("authors")),
+  externalAuthors: z.array(ExternalAuthorSchema).optional(),
   cite: z.string(),
-  doi: z.string().url(),
-  links: z.array(z.string()).optional(),
+  doi: z.string().url().optional(),
   tags: z.array(z.string()).optional(),
-  contributors: z.array(z.string()).optional(),
 });
 
 export type Experience = z.infer<typeof ExperienceSchema>;
@@ -69,4 +74,6 @@ export type Education = z.infer<typeof EducationSchema>;
 export type Author = z.infer<typeof AuthorSchema>;
 export type Article = z.infer<typeof ArticleSchema>;
 export type Project = z.infer<typeof ProjectSchema>;
+export type ExternalAuthor = z.infer<typeof ExternalAuthorSchema>;
+export type ExternalLink = z.infer<typeof ExternalLinkSchema>;
 export type Publication = z.infer<typeof PublicationSchema>;

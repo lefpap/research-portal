@@ -1,0 +1,54 @@
+---
+import type { ComponentProps } from "astro/types";
+import { getCollection } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+import type { CollectionEntry } from "astro:content";
+import { ChevronLeftIcon } from "lucide-react";
+import PublicationInfo from "@/components/blocks/Publication/Publicationinfo";
+import { Button } from "@/components/ui/button";
+
+interface Props extends ComponentProps<typeof BaseLayout> {
+  // Add props here
+  publication: CollectionEntry<"publications">;
+  minutesRead: number;
+}
+
+const { publication, minutesRead, ...rest } = Astro.props;
+
+const authors = await getCollection("authors", ({ slug }) =>
+  publication.data.authors.map((author) => author.slug).includes(slug),
+);
+---
+
+<BaseLayout {...rest}>
+  <div class="container grid items-stretch gap-10">
+    <a href="/publications">
+      <Button
+        variant={"outline"}
+        size={"sm"}
+        className="flex items-center justify-center gap-2"
+      >
+        <ChevronLeftIcon className="size-4" />
+        Back to Publications
+      </Button>
+    </a>
+    <article
+      class="prose prose-stone max-w-none overflow-hidden dark:prose-invert md:prose-lg lg:prose-xl"
+    >
+      <header class="">
+        <h1>{publication.data.title}</h1>
+        <PublicationInfo
+          className=""
+          publication={publication}
+          authors={authors}
+          client:load
+        />
+        <h2>Abstract</h2>
+        <p class="lead">{publication.data.summary}</p>
+      </header>
+      <main class="mt-11">
+        <slot />
+      </main>
+    </article>
+  </div>
+</BaseLayout>

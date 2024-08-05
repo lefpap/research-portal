@@ -16,7 +16,7 @@ function NewsDisplay({ initialNews, tags, className }: NewsDisplayProps) {
           className,
         )}
       >
-        <div className="w-full md:w-2/3">
+        <div className="w-full md:w-2/4">
           <NewsFilters className="sm:sticky sm:top-28" />
         </div>
         <div className={"flex w-full"}>
