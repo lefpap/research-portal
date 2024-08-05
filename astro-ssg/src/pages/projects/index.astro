@@ -1,0 +1,59 @@
+---
+import type { ProjectItem } from "@/context/project.context";
+import ProjectsDisplay from "@/components/blocks/Project/ProjectsDisplay";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+// Fetch all published projects
+const projects = await getCollection(
+  "projects",
+  ({ data }) => data.status === "published",
+);
+
+// Extract and unique tags from projects
+const uniqueTags = [
+  ...new Set(projects.flatMap((project) => project.data.tags)),
+]
+  .filter((tag) => tag !== undefined)
+  .sort((a, b) => a.localeCompare(b));
+
+// Create a list of project items with authors
+const projectItems = (await Promise.all(
+  projects.map(async (project) => {
+    const authors = await getCollection("authors", ({ slug }) =>
+      project.data.authors.map((author) => author.slug).includes(slug),
+    );
+
+    return {
+      project,
+      authors,
+    };
+  }),
+)) satisfies ProjectItem[];
+
+// Extract and unique authors from projectItems
+const uniqueAuthors = Array.from(
+  projectItems
+    .flatMap(({ authors }) => authors)
+    .reduce(
+      (map, author) => map.set(author.slug, author),
+      new Map<string, CollectionEntry<"authors">>(),
+    )
+    .values(),
+);
+---
+
+<BaseLayout title="Projects">
+  <section>
+    <div class="container">
+      <h1 class="text-center text-4xl font-black">Checkout our Projects</h1>
+      <ProjectsDisplay
+        className="mt-11"
+        initialProjectItems={projectItems}
+        authors={uniqueAuthors}
+        tags={uniqueTags}
+        client:load
+      />
+    </div>
+  </section>
+</BaseLayout>

@@ -50,9 +50,9 @@ export const ProjectSchema = z.object({
   title: z.string(),
   summary: z.string(),
   status: z.enum(["draft", "published"]).default("draft"),
-  author: reference("authors"),
+  authors: z.array(reference("authors")),
+  externalAuthors: z.array(ExternalAuthorSchema).optional(),
   tags: z.array(z.string()).optional(),
-  contributors: z.array(z.string()).optional(),
   repo: z.string().url().optional(),
   demo: z.string().url().optional(),
 });

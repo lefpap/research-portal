@@ -1,7 +1,7 @@
 import CollectionOrEmptyMessage from "@/components/utility/CollectionOrEmptyMessage";
 import { cn } from "@/lib/utils";
 import PublicationCard from "./PublicationCard";
-import { usePublicationsCtx } from "@/hooks/usePublicationsCtx";
+import { usePublicationsCtx } from "@/hooks/usePublicationsCtx.hook";
 
 interface PublicationsGridProps {
   className?: string;

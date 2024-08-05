@@ -4,26 +4,26 @@ import SearchInput from "@/components/utility/SearchInput";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { isToday, subDays, subMonths, subYears, isAfter } from "date-fns";
-import { usePublicationsCtx } from "@/hooks/usePublicationsCtx";
+import { usePublicationsCtx } from "@/hooks/usePublicationsCtx.hook";
 import AuthorsToggleGroup from "@/components/utility/AuthorsToggleGroup";
 import type { CollectionEntry } from "astro:content";
 
-interface NewsFiltersProps {
-  className?: string;
-}
-
-interface FilterProps {
+interface PublicationFilters {
   search?: string;
   time?: { name: string; value: string };
   authors?: string[];
   tags?: string[];
 }
 
-function PublicationFilters({ className }: NewsFiltersProps) {
+interface PublicationFiltersProps {
+  className?: string;
+}
+
+function PublicationFilters({ className }: PublicationFiltersProps) {
   const { tags, initialPublications, authors, setPublications } =
     usePublicationsCtx();
 
-  const [filters, setFilters] = useState<FilterProps>({
+  const [filters, setFilters] = useState<PublicationFilters>({
     search: undefined,
     authors: undefined,
     time: undefined,
