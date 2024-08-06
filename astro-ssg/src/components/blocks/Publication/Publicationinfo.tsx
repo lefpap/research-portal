@@ -19,7 +19,7 @@ interface PublicationInfoProps {
   className?: string;
 }
 
-export default function Publicationinfo({
+export default function PublicationInfo({
   publication,
   authors,
   className,

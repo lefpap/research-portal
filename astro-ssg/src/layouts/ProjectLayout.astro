@@ -2,22 +2,27 @@
 import type { ComponentProps } from "astro/types";
 import { getCollection } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
+import type { ProjectItem } from "@/context/project.context";
 import type { CollectionEntry } from "astro:content";
 import { ChevronLeftIcon } from "lucide-react";
-import PublicationInfo from "@/components/blocks/Publication/PublicationInfo";
+import ProjectInfo from "@/components/blocks/Project/ProjectInfo";
 import { Button } from "@/components/ui/button";
 
 interface Props extends ComponentProps<typeof BaseLayout> {
   // Add props here
-  publication: CollectionEntry<"publications">;
-  minutesRead: number;
+  project: CollectionEntry<"projects">;
 }
 
-const { publication, minutesRead, ...rest } = Astro.props;
+const { project, ...rest } = Astro.props;
 
 const authors = await getCollection("authors", ({ slug }) =>
-  publication.data.authors.map((author) => author.slug).includes(slug),
+  project.data.authors.map((author) => author.slug).includes(slug),
 );
+
+const projectItem = {
+  project,
+  authors,
+} satisfies ProjectItem;
 ---
 
 <BaseLayout {...rest}>
@@ -36,15 +41,10 @@ const authors = await getCollection("authors", ({ slug }) =>
       class="prose prose-stone max-w-none overflow-hidden dark:prose-invert md:prose-lg lg:prose-xl"
     >
       <header class="">
-        <h1>{publication.data.title}</h1>
-        <PublicationInfo
-          className=""
-          publication={publication}
-          authors={authors}
-          client:load
-        />
+        <h1>{project.data.title}</h1>
+        <ProjectInfo className="" projectItem={projectItem} client:load />
         <h2>Abstract</h2>
-        <p class="lead">{publication.data.summary}</p>
+        <p class="lead">{project.data.summary}</p>
       </header>
       <main class="mt-11">
         <slot />
