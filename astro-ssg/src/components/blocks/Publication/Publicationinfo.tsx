@@ -1,7 +1,7 @@
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 import ClipboardCopy from "@/components/utility/ClipboardCopy";
+import type { PublicationItem } from "@/context/publication.context";
 import { cn } from "@/lib/utils";
-import type { CollectionEntry } from "astro:content";
 import { format } from "date-fns";
 import {
   CalendarIcon,
@@ -14,16 +14,15 @@ import {
 import { useRef, useState } from "react";
 
 interface PublicationInfoProps {
-  publication: CollectionEntry<"publications">;
-  authors: CollectionEntry<"authors">[];
+  publicationItem: PublicationItem;
   className?: string;
 }
 
 export default function PublicationInfo({
-  publication,
-  authors,
+  publicationItem,
   className,
 }: PublicationInfoProps) {
+  const { publication, authors } = publicationItem;
   const [citeOpen, setCiteOpen] = useState(false);
   const citeRef = useRef<HTMLPreElement>(null);
 

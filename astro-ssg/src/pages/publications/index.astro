@@ -1,33 +1,46 @@
 ---
 import PublicationsDisplay from "@/components/blocks/Publication/PublicationsDisplay";
+import type { PublicationItem } from "@/context/publication.context";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
+// Fetch all published publications
 const publications = await getCollection(
   "publications",
   ({ data }) => data.status === "published",
 );
 
-const authors = await getCollection("authors");
-
+// Extract and unique tags from publications
 const uniqueTags = [
   ...new Set(publications.flatMap((publication) => publication.data.tags)),
 ]
   .filter((tag) => tag !== undefined)
   .sort((a, b) => a.localeCompare(b));
 
-const data = publications.map((publication) => {
-  const pubAuthors = publication.data.authors
-    .map((pubAuthor) =>
-      authors.find((author) => author.slug === pubAuthor.slug),
-    )
-    .filter((author) => author !== undefined);
+// Create a list of project items with authors
+const publicationItems = (await Promise.all(
+  publications.map(async (publication) => {
+    const authors = await getCollection("authors", ({ slug }) =>
+      publication.data.authors.map((author) => author.slug).includes(slug),
+    );
 
-  return {
-    ...publication,
-    authors: pubAuthors,
-  };
-});
+    return {
+      publication,
+      authors,
+    };
+  }),
+)) satisfies PublicationItem[];
+
+// Extract and unique authors from projectItems
+const uniqueAuthors = Array.from(
+  publicationItems
+    .flatMap(({ authors }) => authors)
+    .reduce(
+      (map, author) => map.set(author.slug, author),
+      new Map<string, CollectionEntry<"authors">>(),
+    )
+    .values(),
+);
 ---
 
 <BaseLayout title="Publications">
@@ -36,9 +49,9 @@ const data = publications.map((publication) => {
       <h1 class="text-center text-4xl font-black">Read our Publications</h1>
       <PublicationsDisplay
         className="mt-11"
-        initialPublications={data}
+        initialPublicationItems={publicationItems}
         tags={uniqueTags}
-        authors={authors}
+        authors={uniqueAuthors}
         client:visible
       />
     </div>

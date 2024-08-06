@@ -20,7 +20,7 @@ interface PublicationFiltersProps {
 }
 
 function PublicationFilters({ className }: PublicationFiltersProps) {
-  const { tags, initialPublications, authors, setPublications } =
+  const { tags, initialPublicationItems, authors, setPublicationItems } =
     usePublicationsCtx();
 
   const [filters, setFilters] = useState<PublicationFilters>({
@@ -50,12 +50,12 @@ function PublicationFilters({ className }: PublicationFiltersProps) {
   };
 
   useEffect(() => {
-    let filteredPublications = [...initialPublications];
+    let filteredPublicationItems = [...initialPublicationItems];
 
     if (filters.search) {
       const search = filters.search.trim().toLowerCase();
-      filteredPublications = filteredPublications.filter((article) =>
-        article.data.title.toLowerCase().includes(search),
+      filteredPublicationItems = filteredPublicationItems.filter((item) =>
+        item.publication.data.title.toLowerCase().includes(search),
       );
     }
 
@@ -65,31 +65,39 @@ function PublicationFilters({ className }: PublicationFiltersProps) {
 
       switch (time) {
         case "today":
-          filteredPublications = filteredPublications.filter((article) => {
-            const { publishedAt } = article.data;
-            return isToday(new Date(publishedAt));
-          });
+          filteredPublicationItems = filteredPublicationItems.filter(
+            ({ publication }) => {
+              const { publishedAt } = publication.data;
+              return isToday(new Date(publishedAt));
+            },
+          );
           break;
         case "week":
           const weekAgo = subDays(today, 7);
-          filteredPublications = filteredPublications.filter((article) => {
-            const { publishedAt } = article.data;
-            return isAfter(new Date(publishedAt), weekAgo);
-          });
+          filteredPublicationItems = filteredPublicationItems.filter(
+            ({ publication }) => {
+              const { publishedAt } = publication.data;
+              return isAfter(new Date(publishedAt), weekAgo);
+            },
+          );
           break;
         case "month":
           const monthAgo = subMonths(today, 1);
-          filteredPublications = filteredPublications.filter((article) => {
-            const { publishedAt } = article.data;
-            return isAfter(new Date(publishedAt), monthAgo);
-          });
+          filteredPublicationItems = filteredPublicationItems.filter(
+            ({ publication }) => {
+              const { publishedAt } = publication.data;
+              return isAfter(new Date(publishedAt), monthAgo);
+            },
+          );
           break;
         case "year":
           const yearAgo = subYears(today, 1);
-          filteredPublications = filteredPublications.filter((article) => {
-            const { publishedAt } = article.data;
-            return isAfter(new Date(publishedAt), yearAgo);
-          });
+          filteredPublicationItems = filteredPublicationItems.filter(
+            ({ publication }) => {
+              const { publishedAt } = publication.data;
+              return isAfter(new Date(publishedAt), yearAgo);
+            },
+          );
           break;
         default:
           console.error("Invalid time filter");
@@ -98,25 +106,27 @@ function PublicationFilters({ className }: PublicationFiltersProps) {
     }
 
     if (filters.authors) {
-      filteredPublications = filteredPublications.filter((article) =>
-        filters.authors?.some((id) =>
-          article.authors
-            .map((author) => author.id)
-            ?.includes(id as CollectionEntry<"authors">["id"]),
-        ),
+      filteredPublicationItems = filteredPublicationItems.filter(
+        ({ authors }) =>
+          filters.authors?.some((id) =>
+            authors
+              .map((author) => author.id)
+              ?.includes(id as CollectionEntry<"authors">["id"]),
+          ),
       );
     }
 
     if (filters.tags) {
-      filteredPublications = filteredPublications.filter((article) =>
-        filters.tags?.some((tag) => article.data.tags?.includes(tag)),
+      filteredPublicationItems = filteredPublicationItems.filter(
+        ({ publication }) =>
+          filters.tags?.some((tag) => publication.data.tags?.includes(tag)),
       );
     }
 
-    hasFilters
-      ? setPublications(filteredPublications)
-      : setPublications(initialPublications);
-  }, [filters, hasFilters, initialPublications]);
+    setPublicationItems(
+      hasFilters ? filteredPublicationItems : initialPublicationItems,
+    );
+  }, [filters, hasFilters, initialPublicationItems]);
 
   return (
     <div className={cn("flex flex-col gap-3", className)}>

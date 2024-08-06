@@ -1,18 +1,17 @@
 import type { CollectionEntry } from "astro:content";
 import { createContext, useState } from "react";
 
-export type PublicationWithAuthors = CollectionEntry<"publications"> & {
+export interface PublicationItem {
+  publication: CollectionEntry<"publications">;
   authors: CollectionEntry<"authors">[];
-};
+}
 
 export interface PublicationContextState {
-  initialPublications: PublicationWithAuthors[];
-  publications: PublicationWithAuthors[];
+  initialPublicationItems: PublicationItem[];
+  publicationItems: PublicationItem[];
   authors: CollectionEntry<"authors">[];
   tags: string[];
-  setPublications: React.Dispatch<
-    React.SetStateAction<PublicationWithAuthors[]>
-  >;
+  setPublicationItems: React.Dispatch<React.SetStateAction<PublicationItem[]>>;
 }
 
 export const PublicationContext = createContext<
@@ -20,29 +19,30 @@ export const PublicationContext = createContext<
 >(undefined);
 
 export interface PublicationProviderProps {
-  initialPublications: PublicationWithAuthors[];
+  initialPublicationItems: PublicationItem[];
   tags: string[];
   authors: CollectionEntry<"authors">[];
   children: React.ReactNode;
 }
 
 export function PublicationProvider({
-  initialPublications,
+  initialPublicationItems,
   tags,
   authors,
   children,
 }: PublicationProviderProps) {
-  const [publications, setPublications] =
-    useState<PublicationWithAuthors[]>(initialPublications);
+  const [publicationItems, setPublicationItems] = useState<PublicationItem[]>(
+    initialPublicationItems,
+  );
 
   return (
     <PublicationContext.Provider
       value={{
-        initialPublications,
-        publications,
+        initialPublicationItems,
+        publicationItems,
         authors,
         tags,
-        setPublications,
+        setPublicationItems: setPublicationItems,
       }}
     >
       {children}
