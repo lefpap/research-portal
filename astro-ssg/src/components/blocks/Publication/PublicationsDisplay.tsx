@@ -12,14 +12,14 @@ interface PublicationsDisplayProps
 }
 
 function PublicationsDisplay({
-  initialPublications,
+  initialPublicationItems: initialPublications,
   authors,
   tags,
   className,
 }: PublicationsDisplayProps) {
   return (
     <PublicationProvider
-      initialPublications={initialPublications}
+      initialPublicationItems={initialPublications}
       authors={authors}
       tags={tags}
     >

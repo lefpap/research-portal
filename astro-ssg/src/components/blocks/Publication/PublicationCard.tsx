@@ -8,15 +8,16 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LinkIcon } from "lucide-react";
-import type { PublicationWithAuthors } from "@/context/publication.context";
+import type { PublicationItem } from "@/context/publication.context";
 import PublicationInfo from "@/components/blocks/Publication/PublicationInfo";
 
 interface PublicationCardProps {
-  publication: PublicationWithAuthors;
+  publicationItem: PublicationItem;
   className?: string;
 }
 
-function PublicationCard({ publication }: PublicationCardProps) {
+function PublicationCard({ publicationItem }: PublicationCardProps) {
+  const { publication } = publicationItem;
   return (
     <Card>
       <CardHeader>
@@ -29,15 +30,12 @@ function PublicationCard({ publication }: PublicationCardProps) {
             <LinkIcon className="hidden size-5 group-hover:block" />
           </a>
         </CardTitle>
-        <CardDescription className="line-clamp-3">
+        <CardDescription className="line-clamp-2">
           {publication.data.summary}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-1">
-        <PublicationInfo
-          publication={publication}
-          authors={publication.authors}
-        />
+        <PublicationInfo publicationItem={publicationItem} />
       </CardContent>
       <CardFooter className="flex flex-wrap items-center justify-start gap-1.5 capitalize">
         {publication.data.tags?.map((tag) => (

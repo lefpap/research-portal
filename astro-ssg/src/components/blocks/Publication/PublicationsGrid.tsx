@@ -8,11 +8,11 @@ interface PublicationsGridProps {
 }
 
 function PublicationsGrid({ className }: PublicationsGridProps) {
-  const { publications } = usePublicationsCtx();
+  const { publicationItems } = usePublicationsCtx();
 
   return (
     <CollectionOrEmptyMessage
-      collection={publications}
+      collection={publicationItems}
       emptyMessage={
         <p className="text-center text-sm text-muted-foreground">
           No publications to display
@@ -20,10 +20,10 @@ function PublicationsGrid({ className }: PublicationsGridProps) {
       }
     >
       <ul className={cn("grid items-stretch gap-10", className)}>
-        {publications.map((publication) => {
+        {publicationItems.map((item) => {
           return (
-            <li key={publication.id} className="overflow-hidden">
-              <PublicationCard publication={publication} />
+            <li key={item.publication.id} className="overflow-hidden">
+              <PublicationCard publicationItem={item} />
             </li>
           );
         })}
