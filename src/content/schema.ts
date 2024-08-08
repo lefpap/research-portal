@@ -6,7 +6,6 @@ export const ExperienceSchema = z.object({
   description: z.string(),
   start: z.date(),
   end: z.date().optional(),
-  current: z.boolean().optional().default(false),
 });
 
 export const EducationSchema = z.object({
