@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { LinkIcon } from "lucide-react";
 import type { PublicationItem } from "@/context/publication.context";
 import PublicationInfo from "@/components/blocks/Publication/PublicationInfo";
+import { cn } from "@/lib/utils";
 
 interface PublicationCardProps {
   publicationItem: PublicationItem;
@@ -37,12 +38,19 @@ function PublicationCard({ publicationItem }: PublicationCardProps) {
       <CardContent className="flex flex-col gap-1">
         <PublicationInfo publicationItem={publicationItem} />
       </CardContent>
-      <CardFooter className="flex flex-wrap items-center justify-start gap-1.5 capitalize">
-        {publication.data.tags?.map((tag) => (
-          <Badge variant={"secondary"} key={tag}>
-            {tag}
-          </Badge>
-        ))}
+      <CardFooter>
+        <ul
+          className={cn(
+            "flex flex-wrap items-center justify-start gap-1.5 capitalize",
+            { hidden: publication.data.tags === undefined },
+          )}
+        >
+          {publication.data.tags?.map((tag) => (
+            <Badge variant={"secondary"} key={tag}>
+              {tag}
+            </Badge>
+          ))}
+        </ul>
       </CardFooter>
     </Card>
   );

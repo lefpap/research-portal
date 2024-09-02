@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
 import {
   Card,
   CardContent,
@@ -8,8 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CalendarIcon, NewspaperIcon } from "lucide-react";
 import type { CollectionEntry } from "astro:content";
+import { Badge } from "@/components/ui/badge";
+import NewsInfo from "./NewsInfo";
 
 interface NewsCardProps {
   article: CollectionEntry<"news">;
@@ -32,46 +32,31 @@ function NewsCard({ article, className }: NewsCardProps) {
         </a>
       </div>
       <CardHeader className="flex-grow pt-1">
-        <div className="flex flex-wrap items-center justify-start gap-3">
-          <a
-            href={article.data.source.url}
-            target="_blank"
-            className="flex items-center gap-1 font-mono text-xs text-muted-foreground underline"
-          >
-            <NewspaperIcon className="size-4" />
-            <span>{article.data.source.name}</span>
-          </a>
-          <span className="flex items-center gap-1 font-mono text-xs text-muted-foreground">
-            <CalendarIcon className="size-4" />
-            <span>
-              {format(article.data.publishedAt, "MMM dd, yyyy").toUpperCase()}
-            </span>
-          </span>
-        </div>
         <CardTitle className="pt-1">
           <a href={`/news/${article.slug}`} className="hover:underline">
             {article.data.title}
           </a>
         </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <CardDescription className="mt-1.5 line-clamp-2 text-sm">
+        <CardDescription className="line-clamp-2">
           {article.data.summary}
         </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <NewsInfo article={article} />
       </CardContent>
       <CardFooter>
-        {article.data.tags && (
-          <ul className="flex flex-wrap items-center justify-start gap-2">
-            {article.data.tags.map((tag, index) => (
-              <li
-                key={index}
-                className="rounded bg-muted px-2 py-1 text-xs capitalize text-muted-foreground"
-              >
-                {tag}
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul
+          className={cn(
+            "flex flex-wrap items-center justify-start gap-1.5 capitalize",
+            { hidden: article.data.tags === undefined },
+          )}
+        >
+          {article.data.tags?.map((tag) => (
+            <Badge variant={"secondary"} key={tag}>
+              {tag}
+            </Badge>
+          ))}
+        </ul>
       </CardFooter>
     </Card>
   );

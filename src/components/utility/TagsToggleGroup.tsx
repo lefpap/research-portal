@@ -5,7 +5,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ChevronsUpDownIcon, RefreshCwIcon } from "lucide-react";
+import { ChevronsUpDownIcon, RefreshCwIcon, TagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -74,8 +74,9 @@ function TagsToggleGroup({
               value={tag}
               variant={"primary"}
               size={"sm"}
-              className="flex-shrink-0 text-xs font-bold capitalize"
+              className="flex-shrink-0 gap-1 px-4 text-xs font-bold capitalize"
             >
+              <TagIcon className="size-4" />
               {tag}
             </ToggleGroupItem>
           ))}
