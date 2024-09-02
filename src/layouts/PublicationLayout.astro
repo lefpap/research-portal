@@ -18,6 +18,11 @@ const { publication, minutesRead, ...rest } = Astro.props;
 const authors = await getCollection("authors", ({ slug }) =>
   publication.data.authors.map((author) => author.slug).includes(slug),
 );
+
+const publicationItem = {
+  publication,
+  authors,
+};
 ---
 
 <BaseLayout {...rest}>
@@ -39,8 +44,7 @@ const authors = await getCollection("authors", ({ slug }) =>
         <h1>{publication.data.title}</h1>
         <PublicationInfo
           className=""
-          publication={publication}
-          authors={authors}
+          publicationItem={publicationItem}
           client:load
         />
         <h2>Abstract</h2>
