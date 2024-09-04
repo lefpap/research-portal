@@ -5,6 +5,7 @@ import {
   PublicationProvider,
   type PublicationProviderProps,
 } from "@/context/publication.context";
+import { usePublicationsCtx } from "@/hooks/usePublicationsCtx.hook";
 
 interface PublicationsDisplayProps
   extends Omit<PublicationProviderProps, "children"> {
@@ -33,10 +34,29 @@ function PublicationsDisplay({
           <PublicationFilters className="sm:sticky sm:top-28" />
         </div>
         <div className={"flex w-full"}>
-          <PublicationsGrid className="flex-1" />
+          <PublicationItemsDisplay className="flex-1" />
         </div>
       </div>
     </PublicationProvider>
+  );
+}
+
+function PublicationItemsDisplay({ className }: { className?: string }) {
+  const { publicationItems } = usePublicationsCtx();
+
+  if (publicationItems.length === 0) {
+    return (
+      <p className="text-center text-sm text-muted-foreground">
+        No publications to display
+      </p>
+    );
+  }
+
+  return (
+    <PublicationsGrid
+      publicationItems={publicationItems}
+      className={className}
+    />
   );
 }
 

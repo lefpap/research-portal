@@ -1,34 +1,23 @@
-import CollectionOrEmptyMessage from "@/components/utility/CollectionOrEmptyMessage";
 import { cn } from "@/lib/utils";
 import ProjectCard from "@/components/blocks/Project/ProjectCard";
-import { useProjectsCtx } from "@/hooks/useProjectsCtx.hook";
+import type { ProjectItem } from "@/context/project.context";
 
 interface ProjectsGridProps {
+  projectItems: ProjectItem[];
   className?: string;
 }
 
-function ProjectsGrid({ className }: ProjectsGridProps) {
-  const { projectItems } = useProjectsCtx();
-
+function ProjectsGrid({ projectItems, className }: ProjectsGridProps) {
   return (
-    <CollectionOrEmptyMessage
-      collection={projectItems}
-      emptyMessage={
-        <p className="text-center text-sm text-muted-foreground">
-          No projects to display
-        </p>
-      }
-    >
-      <ul className={cn("grid items-stretch gap-10", className)}>
-        {projectItems.map((item) => {
-          return (
-            <li key={item.project.id} className="overflow-hidden">
-              <ProjectCard projectItem={item} />
-            </li>
-          );
-        })}
-      </ul>
-    </CollectionOrEmptyMessage>
+    <ul className={cn("grid items-stretch gap-10", className)}>
+      {projectItems.map((item) => {
+        return (
+          <li key={item.project.id} className="overflow-hidden">
+            <ProjectCard projectItem={item} />
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 

@@ -1,6 +1,7 @@
 ---
 title: Article - 00 With a very long title to test the layout that might break
 summary: A short summary of the article Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores odit modi officia vero voluptatem molestias. Sed voluptatum ratione consequuntur iure alias eligendi, doloremque molestias adipisci aut suscipit blanditiis, repellendus quod.
+cover: "news-00.jpg"
 status: published
 publishedAt: 2024-07-14
 source:

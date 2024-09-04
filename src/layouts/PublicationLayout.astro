@@ -6,6 +6,7 @@ import type { CollectionEntry } from "astro:content";
 import { ChevronLeftIcon } from "lucide-react";
 import PublicationInfo from "@/components/blocks/Publication/PublicationInfo";
 import { Button } from "@/components/ui/button";
+import GoBackButton from "@/components/utility/GoBackButton";
 
 interface Props extends ComponentProps<typeof BaseLayout> {
   // Add props here
@@ -27,16 +28,15 @@ const publicationItem = {
 
 <BaseLayout {...rest}>
   <div class="container grid items-stretch gap-10">
-    <a href="/publications">
-      <Button
-        variant={"outline"}
-        size={"sm"}
-        className="flex items-center justify-center gap-2"
-      >
-        <ChevronLeftIcon className="size-4" />
-        Back to Publications
-      </Button>
-    </a>
+    <GoBackButton
+      variant={"outline"}
+      size={"sm"}
+      className="flex items-center justify-center gap-2 place-self-start"
+      client:visible
+    >
+      <ChevronLeftIcon className="size-4" />
+      Go Back
+    </GoBackButton>
     <article
       class="prose prose-stone max-w-none overflow-hidden dark:prose-invert md:prose-lg lg:prose-xl"
     >

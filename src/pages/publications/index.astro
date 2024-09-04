@@ -17,7 +17,7 @@ const uniqueTags = [
   .filter((tag) => tag !== undefined)
   .sort((a, b) => a.localeCompare(b));
 
-// Create a list of project items with authors
+// Create a list of publication items with authors
 const publicationItems = (await Promise.all(
   publications.map(async (publication) => {
     const authors = await getCollection("authors", ({ slug }) =>

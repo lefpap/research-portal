@@ -41,19 +41,19 @@ export default function ProjectInfo({
               </li>
             ))}
             {projectItem.project.data.externalAuthors?.map((externalAuthor) => (
-              <li className="group" key={externalAuthor.fullname}>
+              <li className="group" key={externalAuthor.name}>
                 {externalAuthor.url ? (
                   <a
                     className="inline-flex items-center gap-1.5 text-muted-foreground transition hover:text-foreground hover:underline"
                     target="_blank"
                     href={externalAuthor.url}
                   >
-                    {externalAuthor.fullname}
+                    {externalAuthor.name}
                     <ExternalLinkIcon className="size-3" />
                   </a>
                 ) : (
                   <span className="text-muted-foreground">
-                    {externalAuthor.fullname}
+                    {externalAuthor.name}
                   </span>
                 )}
                 <span className="mr-2 text-muted-foreground group-last:hidden">

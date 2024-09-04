@@ -1,34 +1,23 @@
 import { cn } from "@/lib/utils";
 import NewsCard from "@/components/blocks/News/NewsCard";
-import { useNewsCtx } from "@/hooks/useNewsCtx.hook";
-import CollectionOrEmptyMessage from "@/components/utility/CollectionOrEmptyMessage";
+import type { CollectionEntry } from "astro:content";
 
 interface NewsGridProps {
+  newsItems: CollectionEntry<"news">[];
   className?: string;
 }
 
-function NewsGrid({ className }: NewsGridProps) {
-  const { news } = useNewsCtx();
-
+function NewsGrid({ newsItems, className }: NewsGridProps) {
   return (
-    <CollectionOrEmptyMessage
-      collection={news}
-      emptyMessage={
-        <p className="w-full text-center text-sm text-muted-foreground">
-          No news to display
-        </p>
-      }
-    >
-      <ul className={cn("grid items-stretch gap-10", className)}>
-        {news.map((article) => {
-          return (
-            <li key={article.id} className="overflow-x-hidden">
-              <NewsCard article={article} className="" />
-            </li>
-          );
-        })}
-      </ul>
-    </CollectionOrEmptyMessage>
+    <ul className={cn("grid items-stretch gap-10", className)}>
+      {newsItems.map((article) => {
+        return (
+          <li key={article.id} className="overflow-x-hidden">
+            <NewsCard article={article} />
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 

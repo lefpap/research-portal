@@ -1,56 +1,58 @@
 import { reference, z } from "astro:content";
+import type { SchemaContext } from "astro:content";
 
-export const ExperienceSchema = z.object({
-  title: z.string(),
-  company: z.string(),
-  description: z.string(),
-  start: z.date(),
-  end: z.date().optional(),
-});
-
-export const EducationSchema = z.object({
-  degree: z.string(),
-  institution: z.string(),
-  start: z.date(),
-  end: z.date().optional(),
-  description: z.string(),
-});
-
-export const ExternalAuthorSchema = z.object({
-  fullname: z.string(),
-  url: z.string().url().optional(),
-});
-
-export const ExternalLinkSchema = z.object({
+/* Helper Schemas */
+export const ExternalSourceSchema = z.object({
   name: z.string(),
   url: z.string().url(),
 });
 
-export const AuthorSchema = z.object({
-  email: z.string().email(),
-  firstname: z.string(),
-  lastname: z.string(),
-  avatar: z.string().default("/images/avatar-placeholder.png"),
-  experience: z.array(ExperienceSchema).optional(),
-  education: z.array(EducationSchema).optional(),
+export const OptinalExternalSourceSchema = ExternalSourceSchema.partial({
+  url: true,
 });
 
-export const ArticleSchema = z.object({
-  title: z.string(),
-  summary: z.string(),
-  status: z.enum(["draft", "published"]).default("draft"),
-  publishedAt: z.date(),
-  coverImage: z.string().default("/images/post-placeholder.png"),
-  source: ExternalLinkSchema,
-  tags: z.array(z.string()).optional(),
+/* Content Collection Schemas */
+export const AuthorSchema = ({ image }: SchemaContext) =>
+  z.object({
+    email: z.string().email(),
+    firstname: z.string(),
+    lastname: z.string(),
+    avatar: image().optional(),
+  });
+
+export const EducationSchema = z.object({
+  degree: z.string(),
+  institution: z.string(),
+  author: reference("authors"),
+  startDate: z.date(),
+  endDate: z.date().optional(),
 });
+
+export const WorkExperienceSchema = z.object({
+  title: z.string(),
+  company: z.string(),
+  author: reference("authors"),
+  startDate: z.date(),
+  endDate: z.date().optional(),
+});
+
+export const NewsArticleSchema = ({ image }: SchemaContext) =>
+  z.object({
+    title: z.string(),
+    summary: z.string(),
+    status: z.enum(["draft", "published"]).default("draft"),
+    publishedAt: z.date(),
+    cover: image().optional(),
+    source: ExternalSourceSchema,
+    tags: z.array(z.string()).optional(),
+  });
 
 export const ProjectSchema = z.object({
   title: z.string(),
   summary: z.string(),
   status: z.enum(["draft", "published"]).default("draft"),
   authors: z.array(reference("authors")),
-  externalAuthors: z.array(ExternalAuthorSchema).optional(),
+  externalAuthors: z.array(OptinalExternalSourceSchema).optional(),
   tags: z.array(z.string()).optional(),
   repo: z.string().url().optional(),
   demo: z.string().url().optional(),
@@ -62,17 +64,18 @@ export const PublicationSchema = z.object({
   status: z.enum(["draft", "published"]).default("draft"),
   publishedAt: z.date(),
   authors: z.array(reference("authors")),
-  externalAuthors: z.array(ExternalAuthorSchema).optional(),
+  externalAuthors: z.array(OptinalExternalSourceSchema).optional(),
   cite: z.string(),
-  doi: z.string().url().optional(),
+  links: z.array(ExternalSourceSchema).optional(),
   tags: z.array(z.string()).optional(),
 });
 
-export type Experience = z.infer<typeof ExperienceSchema>;
+/* Type Definitions */
+export type ExternalSource = z.infer<typeof ExternalSourceSchema>;
+export type OptinalExternalSource = z.infer<typeof OptinalExternalSourceSchema>;
+export type Author = z.infer<ReturnType<typeof AuthorSchema>>;
 export type Education = z.infer<typeof EducationSchema>;
-export type Author = z.infer<typeof AuthorSchema>;
-export type Article = z.infer<typeof ArticleSchema>;
+export type WorkExperience = z.infer<typeof WorkExperienceSchema>;
+export type NewsArticle = z.infer<ReturnType<typeof NewsArticleSchema>>;
 export type Project = z.infer<typeof ProjectSchema>;
-export type ExternalAuthor = z.infer<typeof ExternalAuthorSchema>;
-export type ExternalLink = z.infer<typeof ExternalLinkSchema>;
 export type Publication = z.infer<typeof PublicationSchema>;

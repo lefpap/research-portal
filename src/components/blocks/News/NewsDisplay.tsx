@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import NewsGrid from "./NewsGrid";
 import NewsFilters from "./NewsFilters";
 import { NewsProvider, type NewsProviderProps } from "@/context/news.context";
+import { useNewsCtx } from "@/hooks/useNewsCtx.hook";
 
 interface NewsDisplayProps extends Omit<NewsProviderProps, "children"> {
   className?: string;
@@ -20,11 +21,25 @@ function NewsDisplay({ initialNews, tags, className }: NewsDisplayProps) {
           <NewsFilters className="sm:sticky sm:top-28" />
         </div>
         <div className={"flex w-full"}>
-          <NewsGrid className="flex-1" />
+          <NewsItemsDisplay className="flex-1" />
         </div>
       </div>
     </NewsProvider>
   );
+}
+
+export function NewsItemsDisplay({ className }: { className?: string }) {
+  const { news } = useNewsCtx();
+
+  if (news.length === 0) {
+    return (
+      <p className="text-center text-sm text-muted-foreground">
+        No news to display
+      </p>
+    );
+  }
+
+  return <NewsGrid newsItems={news} className={className} />;
 }
 
 export default NewsDisplay;

@@ -3,8 +3,10 @@ import type { ComponentProps } from "astro/types";
 import BaseLayout from "./BaseLayout.astro";
 import type { CollectionEntry } from "astro:content";
 import { ChevronLeftIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import NewsInfo from "@/components/blocks/News/NewsInfo";
+import GoBackButton from "@/components/utility/GoBackButton";
+import { Image } from "astro:assets";
+import ArticlePlaceholderImage from "@/content/news/article-placeholder.png";
 
 interface Props extends ComponentProps<typeof BaseLayout> {
   // Add props here
@@ -17,23 +19,24 @@ const { article, minutesRead, ...rest } = Astro.props;
 
 <BaseLayout {...rest}>
   <div class="container grid items-stretch gap-10">
-    <a href="/news">
-      <Button
-        variant={"outline"}
-        size={"sm"}
-        className="flex items-center justify-center gap-2"
-      >
-        <ChevronLeftIcon className="size-4" />
-        Back to News
-      </Button>
-    </a>
+    <GoBackButton
+      variant={"outline"}
+      size={"sm"}
+      className="flex items-center justify-center gap-2 place-self-start"
+      client:visible
+    >
+      <ChevronLeftIcon className="size-4" />
+      Go Back
+    </GoBackButton>
     <article
       class="prose prose-stone max-w-none dark:prose-invert md:prose-lg lg:prose-xl"
     >
       <header>
-        <img
-          src={article.data.coverImage}
-          alt={article.id}
+        <Image
+          src={article.data.cover ?? ArticlePlaceholderImage}
+          alt={article.slug}
+          width={article.data.cover?.width}
+          height={article.data.cover?.height}
           class="mt-3 size-full max-h-96 rounded-lg border bg-muted bg-cover object-cover"
         />
         <h1>{article.data.title}</h1>

@@ -6,9 +6,9 @@ publishedAt: 2024-08-05
 authors:
   - bob
 externalAuthors:
-  - fullname: "John Doe"
+  - name: "John Doe"
     url: "https://example.com"
-  - fullname: "Jade Smith"
+  - name: "Jade Smith"
 tags:
   - "java"
   - "computer-science"
