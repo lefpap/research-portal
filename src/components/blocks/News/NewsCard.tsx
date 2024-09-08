@@ -10,6 +10,7 @@ import {
 import type { CollectionEntry } from "astro:content";
 import { Badge } from "@/components/ui/badge";
 import NewsInfo from "./NewsInfo";
+import ArticlePlaceHolderImage from "@/content/news/article-placeholder.png";
 
 interface NewsCardProps {
   article: CollectionEntry<"news">;
@@ -25,7 +26,7 @@ function NewsCard({ article, className }: NewsCardProps) {
           className="block overflow-clip rounded-md border-2 border-transparent transition hover:border-primary"
         >
           <img
-            src={article.data.coverImage}
+            src={article.data?.cover?.src ?? ArticlePlaceHolderImage.src}
             alt={article.id}
             className="size-full max-h-72 bg-muted bg-cover object-cover"
           />

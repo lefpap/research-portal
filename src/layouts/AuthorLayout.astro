@@ -1,0 +1,164 @@
+---
+import type { ComponentProps } from "astro/types";
+import BaseLayout from "./BaseLayout.astro";
+import type { CollectionEntry } from "astro:content";
+import { ChevronLeftIcon } from "lucide-react";
+import { getCollection } from "astro:content";
+import type { ProjectItem } from "@/context/project.context";
+import type { PublicationItem } from "@/context/publication.context";
+import AuthorPostsDisplay from "@/components/blocks/Author/AuthorPostsDisplay";
+import AuthorWorkExperienceDisplay from "@/components/blocks/Author/AuthorWorkExperienceDisplay.astro";
+import AuthorEducationDisplay from "@/components/blocks/Author/AuthorEducationDisplay.astro";
+import GoBackButton from "@/components/utility/GoBackButton";
+import { Image } from "astro:assets";
+import AuthorPlaceholderImage from "@/content/authors/avatar-placeholder.png";
+
+interface Props extends ComponentProps<typeof BaseLayout> {
+  // Add props here
+  author: CollectionEntry<"authors">;
+}
+
+const { author, ...rest } = Astro.props;
+
+const eductaion = await getCollection(
+  "education",
+  ({ data }) => data.author.slug === author.slug,
+).then((entries) =>
+  entries.sort(
+    (a, b) =>
+      new Date(b.data.startDate).getTime() -
+      new Date(a.data.startDate).getTime(),
+  ),
+);
+
+const workExperience = await getCollection(
+  "work-experience",
+  ({ data }) => data.author.slug === author.slug,
+).then((entries) =>
+  entries.sort(
+    (a, b) =>
+      new Date(b.data.startDate).getTime() -
+      new Date(a.data.startDate).getTime(),
+  ),
+);
+
+const projects = await getCollection(
+  "projects",
+  ({ data }) =>
+    data.authors.map((a) => a.slug).includes(author.slug) &&
+    data.status === "published",
+);
+
+// Create a list of project items with authors
+const projectItems = (await Promise.all(
+  projects.map(async (project) => {
+    const authors = await getCollection("authors", ({ slug }) =>
+      project.data.authors.map((author) => author.slug).includes(slug),
+    );
+
+    return {
+      project,
+      authors,
+    };
+  }),
+)) satisfies ProjectItem[];
+
+const publications = await getCollection(
+  "publications",
+  ({ data }) =>
+    data.authors.map((a) => a.slug).includes(author.slug) &&
+    data.status === "published",
+);
+
+// Create a list of publication items with authors
+const publicationItems = (await Promise.all(
+  publications.map(async (publication) => {
+    const authors = await getCollection("authors", ({ slug }) =>
+      publication.data.authors.map((author) => author.slug).includes(slug),
+    );
+
+    return {
+      publication,
+      authors,
+    };
+  }),
+)) satisfies PublicationItem[];
+---
+
+<BaseLayout {...rest}>
+  <div class="container grid items-stretch gap-10">
+    <GoBackButton
+      variant={"outline"}
+      size={"sm"}
+      className="flex items-center justify-center gap-2 place-self-start"
+      client:visible
+    >
+      <ChevronLeftIcon className="size-4" />
+      Go Back
+    </GoBackButton>
+    <article>
+      <header class="flex items-center justify-start gap-5">
+        <Image
+          src={author.data?.avatar ?? AuthorPlaceholderImage}
+          alt="Author Avatar"
+          width={author.data?.avatar?.width}
+          height={author.data?.avatar?.height}
+          class="size-28 rounded-full"
+        />
+        <div class="flex flex-col">
+          <h1 class="mb text-5xl font-black">
+            {`${author.data.firstname} ${author.data.lastname}`}
+          </h1>
+          <p class="text-muted-foreground">{author.data.email}</p>
+        </div>
+      </header>
+
+      <main>
+        <!-- Bio -->
+        <div
+          class="prose prose-stone mt-11 max-w-none dark:prose-invert md:prose-lg lg:prose-xl"
+        >
+          <slot />
+        </div>
+
+        <!-- Education -->
+        {
+          eductaion.length > 0 && (
+            <div class="mt-11">
+              <h2 class="text-3xl font-black">Education</h2>
+              <AuthorEducationDisplay education={eductaion} className="mt-11" />
+            </div>
+          )
+        }
+
+        <!-- Work Experience -->
+        {
+          workExperience.length > 0 && (
+            <div class="mt-11">
+              <h2 class="text-3xl font-black">Work Experience</h2>
+              <AuthorWorkExperienceDisplay
+                workExperience={workExperience}
+                className="mt-11"
+              />
+            </div>
+          )
+        }
+
+        <!-- Author Posts -->
+        {
+          (projectItems.length > 0 || publicationItems.length > 0) && (
+            <div class="mt-11">
+              <h2 class="text-3xl font-black">Author Posts</h2>
+              <AuthorPostsDisplay
+                className="mt-11"
+                projectItems={projectItems}
+                publicationItems={publicationItems}
+                client:visible
+              />
+            </div>
+          )
+        }
+      </main>
+    </article>
+  </div>
+</BaseLayout>

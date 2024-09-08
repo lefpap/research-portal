@@ -8,12 +8,12 @@ export const NAV_LINKS = [
     href: "/team",
   },
   {
-    name: "Posts",
+    name: "News",
+    href: "/news",
+  },
+  {
+    name: "Research",
     links: [
-      {
-        name: "News",
-        href: "/news",
-      },
       {
         name: "Projects",
         href: "/projects",
@@ -23,9 +23,5 @@ export const NAV_LINKS = [
         href: "/publications",
       },
     ],
-  },
-  {
-    name: "Contact",
-    href: "/contact",
   },
 ];

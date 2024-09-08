@@ -7,9 +7,9 @@ authors:
   - bob
   - alice
 externalAuthors:
-  - fullname: "John Doe"
+  - name: "John Doe"
     url: "https://example.com"
-  - fullname: "Jade Smith"
+  - name: "Jade Smith"
 cite: |
   @article{
     Pont-Tuset2017,
@@ -21,7 +21,9 @@ cite: |
     number = {1},
     pages = {128 - 140}
   }
-doi: https://10.1234/5678.com
+links:
+  - name: doi
+    url: https://10.1234/5678.com
 tags:
   - "automata"
   - "state-machines"

@@ -53,19 +53,19 @@ export default function PublicationInfo({
               </li>
             ))}
             {publication.data.externalAuthors?.map((externalAuthor) => (
-              <li className="group" key={externalAuthor.fullname}>
+              <li className="group" key={externalAuthor.name}>
                 {externalAuthor.url ? (
                   <a
                     className="inline-flex items-center gap-1.5 text-muted-foreground transition hover:text-foreground hover:underline"
                     target="_blank"
                     href={externalAuthor.url}
                   >
-                    {externalAuthor.fullname}
+                    {externalAuthor.name}
                     <ExternalLinkIcon className="size-3" />
                   </a>
                 ) : (
                   <span className="text-muted-foreground">
-                    {externalAuthor.fullname}
+                    {externalAuthor.name}
                   </span>
                 )}
                 <span className="mr-2 text-muted-foreground group-last:hidden">
@@ -85,17 +85,20 @@ export default function PublicationInfo({
           Cite
           <CodeIcon className="size-3" />
         </button>
-
-        {publication.data.doi && (
-          <a
-            className="inline-flex cursor-pointer items-center gap-1.5 text-muted-foreground transition hover:text-foreground hover:underline"
-            href={publication.data.doi}
-            target="_blank"
-          >
-            Doi
-            <ExternalLinkIcon className="size-3" />
-          </a>
-        )}
+        <ul>
+          {publication.data.links?.map((link) => (
+            <li key={link.name}>
+              <a
+                className="inline-flex cursor-pointer items-center gap-1.5 text-muted-foreground transition hover:text-foreground hover:underline"
+                href={link.url}
+                target="_blank"
+              >
+                {link.name}
+                <ExternalLinkIcon className="size-3" />
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
       <Collapsible open={citeOpen}>
         <CollapsibleContent className="prose relative max-w-none prose-pre:bg-accent prose-pre:text-accent-foreground">
