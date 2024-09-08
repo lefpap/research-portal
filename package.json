@@ -34,6 +34,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
+    "embla-carousel-react": "^8.2.1",
     "lucide-react": "^0.405.0",
     "mdast-util-to-string": "^4.0.0",
     "react": "^18.3.1",
