@@ -1,11 +1,159 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Button } from "@/components/ui/button";
+import NewsCarousel from "@/components/blocks/News/NewsCarousel";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { ArrowRightIcon } from "lucide-react";
+import ProjectCard from "@/components/blocks/Project/ProjectCard";
+import type { ProjectItem } from "@/context/project.context";
+import type { PublicationItem } from "@/context/publication.context";
+import PublicationCard from "@/components/blocks/Publication/PublicationCard";
+import { FEATURED_PROJECTS, FEATURED_PUBLICATIONS } from "@/lib/consts";
+
+const latestNews = await getCollection(
+  "news",
+  ({ data }) => data.status === "published",
+).then((news) =>
+  news
+    .sort(
+      (a, b) =>
+        new Date(b.data.publishedAt).getTime() -
+        new Date(a.data.publishedAt).getTime(),
+    )
+    .slice(0, 3),
+);
+
+const featuredProjects = (await Promise.all(
+  (
+    await getCollection(
+      "projects",
+      ({ data, slug }) =>
+        data.status === "published" && FEATURED_PROJECTS.includes(slug),
+    )
+  ).map(async (project) => {
+    // Fetch authors for each project in parallel
+    const authors = await getCollection("authors", ({ slug }) =>
+      project.data.authors.map((author) => author.slug).includes(slug),
+    );
+
+    return {
+      project,
+      authors,
+    };
+  }),
+)) satisfies ProjectItem[];
+
+const featuredPublications = (await Promise.all(
+  (
+    await getCollection(
+      "publications",
+      ({ data, slug }) =>
+        data.status === "published" && FEATURED_PUBLICATIONS.includes(slug),
+    )
+  ).map(async (publication) => {
+    // Fetch authors for each publication in parallel
+    const authors = await getCollection("authors", ({ slug }) =>
+      publication.data.authors.map((author) => author.slug).includes(slug),
+    );
+
+    return {
+      publication,
+      authors,
+    };
+  }),
+)) satisfies PublicationItem[];
 ---
 
 <BaseLayout title="Home">
-  <div class="container mx-auto mt-24 flex flex-col items-center gap-3">
-    <h1 class="text-3xl font-black">Welcome to Research Portal</h1>
-    <Button variant={"outline"}>Click Me</Button>
-  </div>
+  <!-- Hero Section -->
+  <section class="mt-11">
+    <div class="container flex flex-col">
+      <h1 class="text-center text-6xl font-bold tracking-tight">
+        Read the Latest news and Research in Computer Science
+      </h1>
+      <p
+        class="mt-6 max-w-3xl text-center text-lg font-medium leading-relaxed text-muted-foreground"
+      >
+        Stay up to date with the latest news and research in computer science.
+      </p>
+
+      <!-- Link to Team Page -->
+      <a href="/team" class="mt-8 self-center"
+        ><Button size={"lg"} variant={"default"}> Meet the Team </Button></a
+      >
+    </div>
+  </section>
+
+  <!-- Latest News Section -->
+  <section class="mt-11">
+    <div class="container">
+      <div class="flex items-baseline justify-between">
+        <h2 class="text-3xl font-black">Latest News</h2>
+        <a href="/news"
+          ><Button
+            variant={"link"}
+            className="flex items-center justify-center gap-3 hover:animate-pulse"
+          >
+            Read all news
+            <ArrowRightIcon className="size-4" />
+          </Button></a
+        >
+      </div>
+      <NewsCarousel newsItems={latestNews} className="mt-8" client:load />
+    </div>
+  </section>
+
+  <!-- Featured Research -->
+  <section class="mt-11">
+    <div class="container">
+      <div class="flex items-baseline justify-between">
+        <h2 class="text-3xl font-black">Featured Projects</h2>
+        <a href="/projects"
+          ><Button
+            variant={"link"}
+            className="flex items-center justify-center gap-3 hover:animate-pulse"
+          >
+            View all projects
+            <ArrowRightIcon className="size-4" />
+          </Button></a
+        >
+      </div>
+      <ul class="mt-8 grid items-stretch gap-5">
+        {
+          featuredProjects.map((project) => (
+            <li class="overflow-hidden">
+              <ProjectCard projectItem={project} client:visible />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Featured Publications -->
+  <section class="mt-11">
+    <div class="container">
+      <div class="flex items-baseline justify-between">
+        <h2 class="text-3xl font-black">Featured Publications</h2>
+        <a href="/publications"
+          ><Button
+            variant={"link"}
+            className="flex items-center justify-center gap-3 hover:animate-pulse"
+          >
+            View all publications
+            <ArrowRightIcon className="size-4" />
+          </Button></a
+        >
+      </div>
+      <ul class="mt-8 grid items-stretch gap-5">
+        {
+          featuredPublications.map((publication) => (
+            <li class="overflow-hidden">
+              <PublicationCard publicationItem={publication} client:visible />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
 </BaseLayout>
