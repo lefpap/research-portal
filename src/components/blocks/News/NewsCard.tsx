@@ -27,7 +27,9 @@ function NewsCard({ article, className }: NewsCardProps) {
         >
           <img
             src={article.data?.cover?.src ?? ArticlePlaceHolderImage.src}
-            alt={article.id}
+            alt={article.slug}
+            width={article.data?.cover?.width}
+            height={article.data?.cover?.height}
             className="size-full max-h-72 bg-muted bg-cover object-cover"
           />
         </a>

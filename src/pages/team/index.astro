@@ -22,6 +22,7 @@ const authors = await getCollection("authors");
               href={`/team/${author.slug}`}
             >
               <Image
+                loading={"eager"}
                 src={author.data.avatar ?? AuthorPlaceholderImage}
                 alt={"Author Avatar"}
                 width={author.data.avatar?.width}

@@ -1,8 +1,9 @@
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { ChevronDownIcon } from "lucide-react";
 import { cn, normalizePath } from "@/lib/utils";
 import type {
@@ -48,6 +49,7 @@ function Link({
 }) {
   const isActive = isLinkActive(link, window.location.pathname);
 
+  console.log(`Undefined Link ${link.name}: `, link.href === undefined);
   return (
     <a
       href={link.href}
@@ -64,12 +66,11 @@ function Link({
 
 function MenuLink({ link }: { link: MenuLinkItem }) {
   const pathname = window.location.pathname;
-
   const isActive = isMenuLinkActive(link, pathname);
 
   return (
-    <HoverCard openDelay={100} closeDelay={100}>
-      <HoverCardTrigger
+    <DropdownMenu>
+      <DropdownMenuTrigger
         className={cn(
           "group flex cursor-pointer items-center border border-transparent px-4 py-2 text-sm transition hover:border-b-foreground data-[state=open]:border-b-foreground",
           { "font-bold": isActive },
@@ -80,26 +81,28 @@ function MenuLink({ link }: { link: MenuLinkItem }) {
           className="ml-2 size-3.5 transition group-data-[state=open]:-rotate-180"
           strokeWidth={isActive ? 3 : 2}
         />
-      </HoverCardTrigger>
-      <HoverCardContent
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
         sideOffset={10}
-        className="flex flex-col p-0"
+        className="flex min-w-[15rem] flex-col p-0"
         align="start"
       >
         {link.links.map((sublink) => {
           return (
-            <Link
+            <DropdownMenuItem
               key={sublink.name}
-              link={sublink}
-              className={
-                "border border-transparent px-4 py-3 text-sm hover:bg-foreground/10"
-              }
-              activeClasses="font-bold"
-            />
+              className="flex cursor-pointer p-0"
+            >
+              <Link
+                link={sublink}
+                className={"flex-1 px-4 py-3 text-sm"}
+                activeClasses="font-bold"
+              />
+            </DropdownMenuItem>
           );
         })}
-      </HoverCardContent>
-    </HoverCard>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 

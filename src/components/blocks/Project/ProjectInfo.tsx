@@ -68,13 +68,19 @@ export default function ProjectInfo({
         <div className="not-prose flex w-full items-center justify-start gap-3 font-mono text-sm">
           <GlobeIcon className="size-4 shrink-0" />
           {hasRepo && (
-            <a className="inline-flex cursor-pointer items-center gap-1.5 text-muted-foreground transition hover:text-foreground hover:underline">
+            <a
+              href={projectItem.project.data.repo}
+              className="inline-flex cursor-pointer items-center gap-1.5 text-muted-foreground transition hover:text-foreground hover:underline"
+            >
               Repo
               <ExternalLinkIcon className="size-3" />
             </a>
           )}
           {hasDemo && (
-            <a className="inline-flex cursor-pointer items-center gap-1.5 text-muted-foreground transition hover:text-foreground hover:underline">
+            <a
+              href={projectItem.project.data.demo}
+              className="inline-flex cursor-pointer items-center gap-1.5 text-muted-foreground transition hover:text-foreground hover:underline"
+            >
               Demo
               <ExternalLinkIcon className="size-3" />
             </a>
