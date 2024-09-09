@@ -1,0 +1,41 @@
+---
+import type { ComponentProps } from "astro/types";
+import BaseLayout from "./BaseLayout.astro";
+import type { CollectionEntry } from "astro:content";
+import { ChevronLeftIcon } from "lucide-react";
+import GoBackButton from "@/components/utility/GoBackButton";
+import { format } from "date-fns";
+
+interface Props extends ComponentProps<typeof BaseLayout> {
+  // Add props here
+  legal: CollectionEntry<"legal">;
+  backLink?: string;
+}
+
+const { legal, ...rest } = Astro.props;
+---
+
+<BaseLayout {...rest}>
+  <div class="container grid items-stretch gap-10">
+    <GoBackButton
+      variant={"outline"}
+      size={"sm"}
+      className="flex items-center justify-center gap-2 place-self-start"
+      client:visible
+    >
+      <ChevronLeftIcon className="size-4" />
+      Go Back
+    </GoBackButton>
+    <article
+      class="prose prose-stone max-w-none overflow-hidden dark:prose-invert md:prose-lg lg:prose-xl"
+    >
+      <header>
+        <h1>{legal.data.title}</h1>
+        <time class="font-mono">{format(legal.data.date, "yyyy-MM-dd")}</time>
+      </header>
+      <main class="mt-11">
+        <slot />
+      </main>
+    </article>
+  </div>
+</BaseLayout>
