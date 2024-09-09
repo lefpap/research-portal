@@ -1,0 +1,36 @@
+{
+  "page.home.title": "Διαβάστε τα τελευταία νέα και την έρευνα στην επιστήμη των υπολογιστών",
+  "page.home.subtitle": "Μείνετε ενήμεροι με τα τελευταία νέα και την έρευνα στην επιστήμη των υπολογιστών.",
+  "page.home.button.team": "Γνωρίστε την Ομάδα",
+  "page.home.heading.latest-news": "Τελευταία Νέα",
+  "page.home.text.empty-news": "Δεν υπάρχουν νέα για εμφάνιση.",
+  "page.home.button.news": "Διαβάστε όλα τα νέα",
+  "page.home.heading.featured-projects": "Έργα",
+  "page.home.text.empty-projects": "Δεν υπάρχουν έργα για εμφάνιση.",
+  "page.home.button.projects": "Προβολή όλων των έργων",
+  "page.home.heading.featured-publications": "Έρευνες",
+  "page.home.text.empty-publications": "Δεν υπάρχουν έρευνες για εμφάνιση.",
+  "page.home.button.publications": "Προβολή όλων των ερευνών",
+
+  "page.team.title": "Η Ομάδα",
+  "page.team.subtitle": "Γνωρίστε την ομάδα πίσω από την έρευνα και τα έργα.",
+
+  "page.author.button.go-back": "Πίσω",
+  "page.author.heading.education": "Εκπαίδευση",
+  "page.author.heading.work-experience": "Επαγγελματική Εμπειρία",
+  "page.author.heading.posts": "Δημοσιεύσεις",
+
+  "page.news.title": "Διαβάστε τα Νέα μας",
+
+  "page.news-article.button.go-back": "Πίσω",
+
+  "page.projects.title": "Δείτε τα Έργα μας",
+
+  "page.project.button.go-back": "Πίσω",
+
+  "page.publications.title": "Διαβάστε τα Άρθρα μας",
+
+  "page.publication.button.go-back": "Πίσω",
+
+  "page.legal.button.go-back": "Πίσω"
+}

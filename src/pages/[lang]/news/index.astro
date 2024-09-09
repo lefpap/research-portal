@@ -1,0 +1,38 @@
+---
+import NewsDisplay from "@/components/blocks/News/NewsDisplay";
+import { languages } from "@/i18n/config";
+import { extractLangFromUri, useTranslations } from "@/i18n/utils";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { fetchAllNews } from "@/lib/utils.collections";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async () => {
+  const paths = Object.keys(languages).map((lang) => ({
+    params: { lang },
+  }));
+
+  return paths;
+}) satisfies GetStaticPaths;
+
+const [lang] = extractLangFromUri(Astro.url);
+const newsItems = await fetchAllNews({
+  lang,
+  filters: [({ data }) => data.status === "published"],
+});
+
+const t = useTranslations(lang);
+---
+
+<BaseLayout title="News">
+  <section>
+    <div class="container">
+      <h1 class="text-center text-4xl font-black">{t("page.news.title")}</h1>
+      <NewsDisplay
+        initialNewsItems={newsItems}
+        lang={lang}
+        className="mt-11"
+        client:only="react"
+      />
+    </div>
+  </section>
+</BaseLayout>

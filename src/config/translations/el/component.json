@@ -1,0 +1,18 @@
+{
+  "component.news-display.empty": "Δεν υπάρχουν νέα",
+  "component.news-filters.search.placeholder": "Αναζητήστε νέα...",
+  "component.news-filters.authors.label": "Συγγραφείς",
+  "component.news-filters.tags.label": "Ετικέτες",
+
+  "component.projects-display.empty": "Δεν υπάρχουν έργα",
+  "component.projects-filters.search.placeholder": "Αναζητήστε έργα...",
+  "component.projects-filters.authors.label": "Συγγραφείς",
+  "component.projects-filters.tags.label": "Ετικέτες",
+
+  "component.publications-display.empty": "Δεν υπάρχουν δημοσιεύσεις",
+  "component.publications-filters.search.placeholder": "Αναζητήστε δημοσιεύσεις...",
+  "component.publications-filters.authors.label": "Συγγραφείς",
+  "component.publications-filters.tags.label": "Ετικέτες",
+
+  "component.footer.button.back-to-top": "Πίσω στην κορυφή"
+}

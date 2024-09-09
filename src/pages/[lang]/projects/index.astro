@@ -1,0 +1,43 @@
+---
+import ProjectsDisplay from "@/components/blocks/Project/ProjectsDisplay";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { type CollectionEntry } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import { languages } from "@/i18n/config";
+import { extractLangFromUri, useTranslations } from "@/i18n/utils";
+import { fetchAllProjects } from "@/lib/utils.collections";
+
+export const getStaticPaths = (async () => {
+  const paths = Object.keys(languages).map((lang) => ({
+    params: { lang },
+  }));
+
+  return paths;
+}) satisfies GetStaticPaths;
+
+const [lang] = extractLangFromUri(Astro.url);
+
+// Create a list of project items with authors
+const projectItems = await fetchAllProjects({
+  lang,
+  filters: [({ data }) => data.status === "published"],
+});
+
+const t = useTranslations(lang);
+---
+
+<BaseLayout title="Projects">
+  <section>
+    <div class="container">
+      <h1 class="text-center text-4xl font-black">
+        {t("page.projects.title")}
+      </h1>
+      <ProjectsDisplay
+        className="mt-11"
+        initialProjectItems={projectItems}
+        lang={lang}
+        client:load
+      />
+    </div>
+  </section>
+</BaseLayout>

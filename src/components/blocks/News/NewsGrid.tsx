@@ -1,19 +1,19 @@
 import { cn } from "@/lib/utils";
 import NewsCard from "@/components/blocks/News/NewsCard";
-import type { CollectionEntry } from "astro:content";
+import type { NewsItem } from "@/context/news.context";
 
 interface NewsGridProps {
-  newsItems: CollectionEntry<"news">[];
+  newsItems: NewsItem[];
   className?: string;
 }
 
 function NewsGrid({ newsItems, className }: NewsGridProps) {
   return (
     <ul className={cn("grid items-stretch gap-10", className)}>
-      {newsItems.map((article) => {
+      {newsItems.map((item) => {
         return (
-          <li key={article.id} className="overflow-x-hidden">
-            <NewsCard article={article} />
+          <li key={item.article.id} className="overflow-x-hidden">
+            <NewsCard newsItem={item} />
           </li>
         );
       })}

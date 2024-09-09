@@ -6,6 +6,7 @@ import {
   type PublicationProviderProps,
 } from "@/context/publication.context";
 import { usePublicationsCtx } from "@/hooks/usePublicationsCtx.hook";
+import { useTranslations } from "@/i18n/utils";
 
 interface PublicationsDisplayProps
   extends Omit<PublicationProviderProps, "children"> {
@@ -14,15 +15,13 @@ interface PublicationsDisplayProps
 
 function PublicationsDisplay({
   initialPublicationItems: initialPublications,
-  authors,
-  tags,
+  lang,
   className,
 }: PublicationsDisplayProps) {
   return (
     <PublicationProvider
       initialPublicationItems={initialPublications}
-      authors={authors}
-      tags={tags}
+      lang={lang}
     >
       <div
         className={cn(
@@ -42,12 +41,13 @@ function PublicationsDisplay({
 }
 
 function PublicationItemsDisplay({ className }: { className?: string }) {
-  const { publicationItems } = usePublicationsCtx();
+  const { publicationItems, lang } = usePublicationsCtx();
+  const t = useTranslations(lang);
 
   if (publicationItems.length === 0) {
     return (
       <p className="text-center text-sm text-muted-foreground">
-        No publications to display
+        {t("component.publications-display.empty")}
       </p>
     );
   }

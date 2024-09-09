@@ -3,14 +3,15 @@ import NewsGrid from "./NewsGrid";
 import NewsFilters from "./NewsFilters";
 import { NewsProvider, type NewsProviderProps } from "@/context/news.context";
 import { useNewsCtx } from "@/hooks/useNewsCtx.hook";
+import { useTranslations } from "@/i18n/utils";
 
 interface NewsDisplayProps extends Omit<NewsProviderProps, "children"> {
   className?: string;
 }
 
-function NewsDisplay({ initialNews, tags, className }: NewsDisplayProps) {
+function NewsDisplay({ initialNewsItems, lang, className }: NewsDisplayProps) {
   return (
-    <NewsProvider initialNews={initialNews} tags={tags}>
+    <NewsProvider initialNewsItems={initialNewsItems} lang={lang}>
       <div
         className={cn(
           "flex flex-col items-stretch justify-between gap-5 md:flex-row",
@@ -29,17 +30,18 @@ function NewsDisplay({ initialNews, tags, className }: NewsDisplayProps) {
 }
 
 export function NewsItemsDisplay({ className }: { className?: string }) {
-  const { news } = useNewsCtx();
+  const { newsItems, lang } = useNewsCtx();
+  const t = useTranslations(lang);
 
-  if (news.length === 0) {
+  if (newsItems.length === 0) {
     return (
       <p className="text-center text-sm text-muted-foreground">
-        No news to display
+        {t("component.news-display.empty")}
       </p>
     );
   }
 
-  return <NewsGrid newsItems={news} className={className} />;
+  return <NewsGrid newsItems={newsItems} className={className} />;
 }
 
 export default NewsDisplay;

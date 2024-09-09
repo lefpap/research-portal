@@ -11,6 +11,7 @@ import { LinkIcon } from "lucide-react";
 import type { PublicationItem } from "@/context/publication.context";
 import PublicationInfo from "@/components/blocks/Publication/PublicationInfo";
 import { cn } from "@/lib/utils";
+import { extractLangFromUri, translateUri } from "@/i18n/utils";
 
 interface PublicationCardProps {
   publicationItem: PublicationItem;
@@ -19,12 +20,13 @@ interface PublicationCardProps {
 
 function PublicationCard({ publicationItem }: PublicationCardProps) {
   const { publication } = publicationItem;
+  const [lang] = extractLangFromUri(publication.slug);
   return (
     <Card>
       <CardHeader>
         <CardTitle>
           <a
-            href={`/publications/${publication.slug}`}
+            href={translateUri(`/publications/${publication.slug}`, lang)}
             className="group flex items-center gap-3 hover:underline"
           >
             {publication.data.title}

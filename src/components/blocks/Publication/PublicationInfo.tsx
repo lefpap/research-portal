@@ -1,6 +1,7 @@
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 import ClipboardCopy from "@/components/utility/ClipboardCopy";
 import type { PublicationItem } from "@/context/publication.context";
+import { extractLangFromUri, translateUri } from "@/i18n/utils";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import {
@@ -26,6 +27,8 @@ export default function PublicationInfo({
   const [citeOpen, setCiteOpen] = useState(false);
   const citeRef = useRef<HTMLPreElement>(null);
 
+  const [lang] = extractLangFromUri(publication.slug);
+
   return (
     <div className={cn("flex flex-col gap-1", className)}>
       <div className="not-prose flex items-center justify-start gap-3 font-mono text-sm">
@@ -41,7 +44,7 @@ export default function PublicationInfo({
             {authors.map((author) => (
               <li className="group" key={author.id}>
                 <a
-                  href={`/team/${author?.slug}`}
+                  href={translateUri(`/team/${author.slug}`, lang)}
                   className="inline-flex items-center gap-1.5 text-muted-foreground transition hover:text-foreground hover:underline"
                 >
                   {`${author?.data.firstname} ${author?.data.lastname}`}

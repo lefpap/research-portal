@@ -5,6 +5,11 @@ import SearchInput from "@/components/utility/SearchInput";
 import { cn } from "@/lib/utils";
 import { useProjectsCtx } from "@/hooks/useProjectsCtx.hook";
 import type { CollectionEntry } from "astro:content";
+import { useTranslations } from "@/i18n/utils";
+
+interface ProjectFiltersProps {
+  className?: string;
+}
 
 interface ProjectFilters {
   search?: string;
@@ -12,13 +17,11 @@ interface ProjectFilters {
   tags?: string[];
 }
 
-interface ProjectFiltersProps {
-  className?: string;
-}
-
 function ProjectFilters({ className }: ProjectFiltersProps) {
-  const { initialProjectItems, setProjectItems, authors, tags } =
+  const { initialProjectItems, setProjectItems, authors, tags, lang } =
     useProjectsCtx();
+
+  const t = useTranslations(lang);
 
   const [filters, setFilters] = useState<ProjectFilters>({
     search: undefined,
@@ -45,8 +48,10 @@ function ProjectFilters({ className }: ProjectFiltersProps) {
 
     if (filters.search) {
       const search = filters.search.trim().toLowerCase();
-      filteredProjectItems = filteredProjectItems.filter((item) =>
-        item.project.data.title.toLowerCase().includes(search),
+      filteredProjectItems = filteredProjectItems.filter(
+        (item) =>
+          item.project.data.title.toLowerCase().includes(search) ||
+          item.project.data.summary.toLowerCase().includes(search),
       );
     }
 
@@ -72,16 +77,20 @@ function ProjectFilters({ className }: ProjectFiltersProps) {
   return (
     <div className={cn("flex flex-col gap-3", className)}>
       <SearchInput
-        placeholder="Search for a project..."
+        placeholder={t("component.projects-filters.search.placeholder")}
         onChange={handleSearchChange}
       />
       <AuthorsToggleGroup
         authors={authors}
-        label="Authors"
+        label={t("component.projects-filters.authors.label")}
         onChange={handleAuthorsChange}
       />
       <div className="w-full border-b border-b-muted"></div>
-      <TagsToggleGroup label="Tags" tags={tags} onChange={handleTagsChange} />
+      <TagsToggleGroup
+        label={t("component.projects-filters.tags.label")}
+        tags={tags}
+        onChange={handleTagsChange}
+      />
     </div>
   );
 }

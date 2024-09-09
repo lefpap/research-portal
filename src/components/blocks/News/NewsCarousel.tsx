@@ -6,18 +6,18 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import NewsCard from "./NewsCard";
-import type { CollectionEntry } from "astro:content";
 import { cn } from "@/lib/utils";
+import type { NewsItem } from "@/context/news.context";
 
 interface NewsCarouselProps {
-  newsItems: CollectionEntry<"news">[];
+  newsItems: NewsItem[];
   className?: string;
 }
 
 function NewsCarousel({ newsItems, className }: NewsCarouselProps) {
   return (
     <Carousel
-      className={cn("", className)}
+      className={cn(className)}
       opts={{
         align: "center",
         loop: true,
@@ -26,7 +26,7 @@ function NewsCarousel({ newsItems, className }: NewsCarouselProps) {
       <CarouselContent>
         {newsItems.map((newsItem, index) => (
           <CarouselItem key={index}>
-            <NewsCard article={newsItem} />
+            <NewsCard newsItem={newsItem} />
           </CarouselItem>
         ))}
       </CarouselContent>

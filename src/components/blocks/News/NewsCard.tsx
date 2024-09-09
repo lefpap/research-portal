@@ -7,22 +7,25 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import type { CollectionEntry } from "astro:content";
 import { Badge } from "@/components/ui/badge";
 import NewsInfo from "./NewsInfo";
-import ArticlePlaceHolderImage from "@/content/news/article-placeholder.png";
+import ArticlePlaceHolderImage from "@/content/news/_images/_placeholder.png";
+import { extractLangFromUri, translateUri } from "@/i18n/utils";
+import type { NewsItem } from "@/context/news.context";
 
 interface NewsCardProps {
-  article: CollectionEntry<"news">;
+  newsItem: NewsItem;
   className?: string;
 }
 
-function NewsCard({ article, className }: NewsCardProps) {
+function NewsCard({ newsItem, className }: NewsCardProps) {
+  const { article } = newsItem;
+  const [lang] = extractLangFromUri(article.slug);
   return (
     <Card className={cn("flex flex-col", className)}>
       <div className="p-3">
         <a
-          href={`/news/${article.slug}`}
+          href={translateUri(`/news/${article.slug}`, lang)}
           className="block overflow-clip rounded-md border-2 border-transparent transition hover:border-primary"
         >
           <img
@@ -36,7 +39,10 @@ function NewsCard({ article, className }: NewsCardProps) {
       </div>
       <CardHeader className="flex-grow pt-1">
         <CardTitle className="pt-1">
-          <a href={`/news/${article.slug}`} className="hover:underline">
+          <a
+            href={translateUri(`/news/${article.slug}`, lang)}
+            className="hover:underline"
+          >
             {article.data.title}
           </a>
         </CardTitle>
@@ -45,7 +51,7 @@ function NewsCard({ article, className }: NewsCardProps) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <NewsInfo article={article} />
+        <NewsInfo newsItem={newsItem} />
       </CardContent>
       <CardFooter>
         <ul

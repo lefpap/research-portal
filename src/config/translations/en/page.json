@@ -1,0 +1,36 @@
+{
+  "page.home.title": "Read our latest Scientic news and Research",
+  "page.home.subtitle": "Stay up to date with the latest news and research in computer science.",
+  "page.home.button.team": "Meet the Team",
+  "page.home.heading.latest-news": "Latest News",
+  "page.home.text.empty-news": "No news to show.",
+  "page.home.button.news": "Read all news",
+  "page.home.heading.featured-projects": "Featured Projects",
+  "page.home.text.empty-projects": "No projects to show.",
+  "page.home.button.projects": "View all projects",
+  "page.home.heading.featured-publications": "Featured Publications",
+  "page.home.text.empty-publications": "No publications to show.",
+  "page.home.button.publications": "View all publications",
+
+  "page.team.title": "The Team",
+  "page.team.subtitle": "Get to know the team behind the research and projects.",
+
+  "page.author.button.go-back": "Back",
+  "page.author.heading.education": "Education",
+  "page.author.heading.work-experience": "Work Experience",
+  "page.author.heading.posts": "Posts",
+
+  "page.news.title": "Read our News",
+
+  "page.news-article.button.go-back": "Back",
+
+  "page.projects.title": "Check out our Projects",
+
+  "page.project.button.go-back": "Back",
+
+  "page.publications.title": "Read our Publications",
+
+  "page.publication.button.go-back": "Back",
+
+  "page.legal.button.go-back": "Back"
+}

@@ -1,12 +1,13 @@
-import TagsToggleGroup from "../../utility/TagsToggleGroup";
+import { useEffect, useState } from "react";
+import type { CollectionEntry } from "astro:content";
+import { isToday, subDays, subMonths, subYears, isAfter } from "date-fns";
+import { cn } from "@/lib/utils";
+import TagsToggleGroup from "@/components/utility/TagsToggleGroup";
 import TimeToggleGroup from "@/components/utility/TimeToggleGroup";
 import SearchInput from "@/components/utility/SearchInput";
-import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import { isToday, subDays, subMonths, subYears, isAfter } from "date-fns";
 import { usePublicationsCtx } from "@/hooks/usePublicationsCtx.hook";
 import AuthorsToggleGroup from "@/components/utility/AuthorsToggleGroup";
-import type { CollectionEntry } from "astro:content";
+import { useTranslations } from "@/i18n/utils";
 
 interface PublicationFilters {
   search?: string;
@@ -20,8 +21,10 @@ interface PublicationFiltersProps {
 }
 
 function PublicationFilters({ className }: PublicationFiltersProps) {
-  const { tags, initialPublicationItems, authors, setPublicationItems } =
+  const { tags, initialPublicationItems, authors, setPublicationItems, lang } =
     usePublicationsCtx();
+
+  const t = useTranslations(lang);
 
   const [filters, setFilters] = useState<PublicationFilters>({
     search: undefined,
@@ -54,8 +57,10 @@ function PublicationFilters({ className }: PublicationFiltersProps) {
 
     if (filters.search) {
       const search = filters.search.trim().toLowerCase();
-      filteredPublicationItems = filteredPublicationItems.filter((item) =>
-        item.publication.data.title.toLowerCase().includes(search),
+      filteredPublicationItems = filteredPublicationItems.filter(
+        (item) =>
+          item.publication.data.title.toLowerCase().includes(search) ||
+          item.publication.data.summary.toLowerCase().includes(search),
       );
     }
 
@@ -131,17 +136,21 @@ function PublicationFilters({ className }: PublicationFiltersProps) {
   return (
     <div className={cn("flex flex-col gap-3", className)}>
       <SearchInput
-        placeholder="Search for a publication..."
+        placeholder={t("component.publications-filters.search.placeholder")}
         onChange={handleSearchChange}
       />
       <TimeToggleGroup onChange={handleTimeChange} />
       <AuthorsToggleGroup
         authors={authors}
-        label="Authors"
+        label={t("component.publications-filters.authors.label")}
         onChange={handleAuthorsChange}
       />
       <div className="w-full border-b border-b-muted"></div>
-      <TagsToggleGroup label="Tags" tags={tags} onChange={handleTagsChange} />
+      <TagsToggleGroup
+        label={t("component.publications-filters.tags.label")}
+        tags={tags}
+        onChange={handleTagsChange}
+      />
     </div>
   );
 }

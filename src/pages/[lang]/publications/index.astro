@@ -1,0 +1,42 @@
+---
+import PublicationsDisplay from "@/components/blocks/Publication/PublicationsDisplay";
+import { languages } from "@/i18n/config";
+import { extractLangFromUri, useTranslations } from "@/i18n/utils";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { fetchAllPublications } from "@/lib/utils.collections";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async () => {
+  const paths = Object.keys(languages).map((lang) => ({
+    params: { lang },
+  }));
+
+  return paths;
+}) satisfies GetStaticPaths;
+
+const [lang] = extractLangFromUri(Astro.url);
+
+// Create a list of publication items with authors
+const publicationItems = await fetchAllPublications({
+  lang,
+  filters: [({ data }) => data.status === "published"],
+});
+
+const t = useTranslations(lang);
+---
+
+<BaseLayout title="Publications">
+  <section>
+    <div class="container">
+      <h1 class="text-center text-4xl font-black">
+        {t("page.publications.title")}
+      </h1>
+      <PublicationsDisplay
+        className="mt-11"
+        initialPublicationItems={publicationItems}
+        lang={lang}
+        client:visible
+      />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,61 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AuthorPlaceholderImage from "@/content/authors/_images/_placeholder.png";
+import { languages } from "@/i18n/config";
+import type { GetStaticPaths } from "astro";
+import {
+  extractLangFromUri,
+  translateUri,
+  useTranslations,
+} from "@/i18n/utils";
+import { fetchAllAuthors } from "@/lib/utils.collections";
+
+export const getStaticPaths = (async () => {
+  const paths = Object.keys(languages).map((lang) => ({
+    params: { lang },
+  }));
+
+  return paths;
+}) satisfies GetStaticPaths;
+
+const [lang] = extractLangFromUri(Astro.url);
+const authors = await fetchAllAuthors({ lang });
+
+const t = useTranslations(lang);
+---
+
+<BaseLayout title="Team">
+  <section class="container mt-24 flex flex-col items-center gap-3">
+    <h1 class="text-3xl font-black">{t("page.team.title")}</h1>
+    <p class="text-muted-foreground">{t("page.team.subtitle")}</p>
+
+    <ul class="mt-5 grid items-stretch gap-8 sm:grid-cols-2">
+      {
+        authors.map((author) => (
+          <li class="flex">
+            <a
+              class="flex w-full flex-col items-center justify-center gap-3 rounded-md border p-10 hover:bg-foreground/10"
+              href={translateUri(`/team/${author.slug}`, lang)}
+            >
+              <Image
+                loading={"eager"}
+                src={author.data.avatar ?? AuthorPlaceholderImage}
+                alt={"Author Avatar"}
+                width={author.data.avatar?.width}
+                height={author.data.avatar?.height}
+                class="size-32 rounded-full"
+              />
+              <div class="flex w-full max-w-full flex-col gap-1 text-center">
+                <h3 class="text-2xl font-black">{`${author.data.firstname} ${author.data.lastname}`}</h3>
+                <p class="break-words text-sm text-muted-foreground">
+                  {author.data.email}
+                </p>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

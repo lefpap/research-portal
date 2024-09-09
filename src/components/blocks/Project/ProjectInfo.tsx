@@ -1,4 +1,5 @@
 import type { ProjectItem } from "@/context/project.context";
+import { extractLangFromUri, translateUri } from "@/i18n/utils";
 import { cn } from "@/lib/utils";
 import {
   ExternalLinkIcon,
@@ -16,9 +17,12 @@ export default function ProjectInfo({
   projectItem,
   className,
 }: ProjectInfoProps) {
-  const hasRepo = projectItem.project.data.repo !== undefined;
-  const hasDemo = projectItem.project.data.demo !== undefined;
+  const { project, authors } = projectItem;
+  const hasRepo = project.data.repo !== undefined;
+  const hasDemo = project.data.demo !== undefined;
   const hasLinks = hasRepo || hasDemo;
+
+  const [lang] = extractLangFromUri(project.slug);
 
   return (
     <div className={cn("flex flex-col gap-1", className)}>
@@ -26,10 +30,10 @@ export default function ProjectInfo({
         <UserPenIcon className="size-4 shrink-0" />
         <ul className="flex flex-wrap items-center justify-start">
           <>
-            {projectItem.authors.map((author) => (
+            {authors.map((author) => (
               <li className="group" key={author.id}>
                 <a
-                  href={`/team/${author?.slug}`}
+                  href={translateUri(`/team/${author.slug}`, lang)}
                   className="inline-flex items-center gap-1.5 text-muted-foreground transition hover:text-foreground hover:underline"
                 >
                   {`${author?.data.firstname} ${author?.data.lastname}`}
@@ -40,7 +44,7 @@ export default function ProjectInfo({
                 </span>
               </li>
             ))}
-            {projectItem.project.data.externalAuthors?.map((externalAuthor) => (
+            {project.data.externalAuthors?.map((externalAuthor) => (
               <li className="group" key={externalAuthor.name}>
                 {externalAuthor.url ? (
                   <a
@@ -70,6 +74,7 @@ export default function ProjectInfo({
           {hasRepo && (
             <a
               href={projectItem.project.data.repo}
+              target="_blank"
               className="inline-flex cursor-pointer items-center gap-1.5 text-muted-foreground transition hover:text-foreground hover:underline"
             >
               Repo
@@ -79,6 +84,7 @@ export default function ProjectInfo({
           {hasDemo && (
             <a
               href={projectItem.project.data.demo}
+              target="_blank"
               className="inline-flex cursor-pointer items-center gap-1.5 text-muted-foreground transition hover:text-foreground hover:underline"
             >
               Demo
