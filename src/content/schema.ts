@@ -70,6 +70,11 @@ export const PublicationSchema = z.object({
   tags: z.array(z.string()).optional(),
 });
 
+export const LegalSchema = z.object({
+  title: z.string(),
+  date: z.coerce.date(),
+});
+
 /* Type Definitions */
 export type ExternalSource = z.infer<typeof ExternalSourceSchema>;
 export type OptinalExternalSource = z.infer<typeof OptinalExternalSourceSchema>;
@@ -79,3 +84,4 @@ export type WorkExperience = z.infer<typeof WorkExperienceSchema>;
 export type NewsArticle = z.infer<ReturnType<typeof NewsArticleSchema>>;
 export type Project = z.infer<typeof ProjectSchema>;
 export type Publication = z.infer<typeof PublicationSchema>;
+export type Legal = z.infer<typeof LegalSchema>;
