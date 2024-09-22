@@ -113,7 +113,6 @@ Inside of your Astro project, you'll see the following folders and files:
 ├── public
 │   ├── favicon.svg
 │   ├── icons
-│   ├── images
 │   └── js
 ├── src
 │   ├── components
@@ -121,6 +120,7 @@ Inside of your Astro project, you'll see the following folders and files:
 │   ├── context
 │   ├── env.d.ts
 │   ├── hooks
+│   ├── i18n
 │   ├── layouts
 │   ├── lib
 │   ├── pages
@@ -131,8 +131,7 @@ Inside of your Astro project, you'll see the following folders and files:
 ├── remark-reading-time.mjs
 ├── components.json
 ├── package-lock.json
-├── package.json
-└── README.md
+└── package.json
 ```
 
 ### Root Directory
@@ -148,7 +147,6 @@ Inside of your Astro project, you'll see the following folders and files:
 - **public**: Contains static assets that will be directly served without processing by Astro.
   - **favicon.svg**: The website's favicon, displayed in the browser tab.
   - **icons**: Directory for icon files used throughout the site.
-  - **images**: Directory for image files used throughout the site.
   - **js**: Directory for JavaScript files that are directly served to the client.
 
 > Any static assets, like images, can be placed in the `public/` directory.

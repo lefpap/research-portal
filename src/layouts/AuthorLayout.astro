@@ -3,15 +3,19 @@ import type { ComponentProps } from "astro/types";
 import BaseLayout from "./BaseLayout.astro";
 import type { CollectionEntry } from "astro:content";
 import { ChevronLeftIcon } from "lucide-react";
-import { getCollection } from "astro:content";
-import type { ProjectItem } from "@/context/project.context";
-import type { PublicationItem } from "@/context/publication.context";
 import AuthorPostsDisplay from "@/components/blocks/Author/AuthorPostsDisplay";
 import AuthorWorkExperienceDisplay from "@/components/blocks/Author/AuthorWorkExperienceDisplay.astro";
 import AuthorEducationDisplay from "@/components/blocks/Author/AuthorEducationDisplay.astro";
 import GoBackButton from "@/components/utility/GoBackButton";
 import { Image } from "astro:assets";
-import AuthorPlaceholderImage from "@/content/authors/avatar-placeholder.png";
+import AuthorPlaceholderImage from "@/content/authors/_images/_placeholder.png";
+import {
+  fetchEducationByAuthor,
+  fetchProjectsByAuthor,
+  fetchPublicationsByAuthor,
+  fetchWorkExperienceByAuthor,
+} from "@/lib/utils.collections";
+import { extractLangFromUri, useTranslations } from "@/i18n/utils";
 
 interface Props extends ComponentProps<typeof BaseLayout> {
   // Add props here
@@ -20,69 +24,21 @@ interface Props extends ComponentProps<typeof BaseLayout> {
 
 const { author, ...rest } = Astro.props;
 
-const eductaion = await getCollection(
-  "education",
-  ({ data }) => data.author.slug === author.slug,
-).then((entries) =>
-  entries.sort(
-    (a, b) =>
-      new Date(b.data.startDate).getTime() -
-      new Date(a.data.startDate).getTime(),
-  ),
-);
+const eductaion = await fetchEducationByAuthor({ author });
+const workExperience = await fetchWorkExperienceByAuthor({ author });
 
-const workExperience = await getCollection(
-  "work-experience",
-  ({ data }) => data.author.slug === author.slug,
-).then((entries) =>
-  entries.sort(
-    (a, b) =>
-      new Date(b.data.startDate).getTime() -
-      new Date(a.data.startDate).getTime(),
-  ),
-);
+const projectItems = await fetchProjectsByAuthor({
+  author,
+  filters: [({ data }) => data.status === "published"],
+});
 
-const projects = await getCollection(
-  "projects",
-  ({ data }) =>
-    data.authors.map((a) => a.slug).includes(author.slug) &&
-    data.status === "published",
-);
+const publicationItems = await fetchPublicationsByAuthor({
+  author,
+  filters: [({ data }) => data.status === "published"],
+});
 
-// Create a list of project items with authors
-const projectItems = (await Promise.all(
-  projects.map(async (project) => {
-    const authors = await getCollection("authors", ({ slug }) =>
-      project.data.authors.map((author) => author.slug).includes(slug),
-    );
-
-    return {
-      project,
-      authors,
-    };
-  }),
-)) satisfies ProjectItem[];
-
-const publications = await getCollection(
-  "publications",
-  ({ data }) =>
-    data.authors.map((a) => a.slug).includes(author.slug) &&
-    data.status === "published",
-);
-
-// Create a list of publication items with authors
-const publicationItems = (await Promise.all(
-  publications.map(async (publication) => {
-    const authors = await getCollection("authors", ({ slug }) =>
-      publication.data.authors.map((author) => author.slug).includes(slug),
-    );
-
-    return {
-      publication,
-      authors,
-    };
-  }),
-)) satisfies PublicationItem[];
+const [lang] = extractLangFromUri(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <BaseLayout {...rest}>
@@ -94,7 +50,7 @@ const publicationItems = (await Promise.all(
       client:visible
     >
       <ChevronLeftIcon className="size-4" />
-      Go Back
+      {t("page.author.button.go-back")}
     </GoBackButton>
     <article>
       <header class="flex items-center justify-start gap-5">
@@ -125,7 +81,9 @@ const publicationItems = (await Promise.all(
         {
           eductaion.length > 0 && (
             <div class="mt-11">
-              <h2 class="text-3xl font-black">Education</h2>
+              <h2 class="text-3xl font-black">
+                {t("page.author.heading.education")}
+              </h2>
               <AuthorEducationDisplay education={eductaion} className="mt-11" />
             </div>
           )
@@ -135,7 +93,9 @@ const publicationItems = (await Promise.all(
         {
           workExperience.length > 0 && (
             <div class="mt-11">
-              <h2 class="text-3xl font-black">Work Experience</h2>
+              <h2 class="text-3xl font-black">
+                {t("page.author.heading.work-experience")}
+              </h2>
               <AuthorWorkExperienceDisplay
                 workExperience={workExperience}
                 className="mt-11"
@@ -148,7 +108,9 @@ const publicationItems = (await Promise.all(
         {
           (projectItems.length > 0 || publicationItems.length > 0) && (
             <div class="mt-11">
-              <h2 class="text-3xl font-black">Author Posts</h2>
+              <h2 class="text-3xl font-black">
+                {t("page.author.heading.posts")}
+              </h2>
               <AuthorPostsDisplay
                 className="mt-11"
                 projectItems={projectItems}

@@ -4,21 +4,23 @@ import BaseHead from "@/layouts/BaseHead.astro";
 import Header from "@/components/blocks/Header/Header";
 import Footer from "@/components/blocks/Footer.astro";
 
-import { NAV_LINKS } from "@/lib/consts";
+import { extractLangFromUri } from "@/i18n/utils";
 
 interface Props extends ComponentProps<typeof BaseHead> {
   layoutClasses?: string;
 }
 
 const { title, description, layoutClasses } = Astro.props;
+
+const [lang] = extractLangFromUri(Astro.url);
 ---
 
-<html lang="en">
+<html lang={lang}>
   <head>
     <BaseHead title={title} description={description} />
   </head>
   <body class="grid min-h-screen grid-rows-[auto_1fr_auto]">
-    <Header client:only="react" navLinks={NAV_LINKS} />
+    <Header client:only="react" />
     <main class:list={["my-11", layoutClasses]}>
       <slot />
     </main>

@@ -41,6 +41,7 @@ export const NewsArticleSchema = ({ image }: SchemaContext) =>
     title: z.string(),
     summary: z.string(),
     status: z.enum(["draft", "published"]).default("draft"),
+    author: reference("authors"),
     publishedAt: z.date(),
     cover: image().optional(),
     source: ExternalSourceSchema,

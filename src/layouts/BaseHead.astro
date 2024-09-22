@@ -1,5 +1,6 @@
 ---
 import "@/styles/base.css";
+import { defaultLang } from "@/i18n/config";
 
 interface Props {
   title: string;
@@ -15,6 +16,7 @@ const { title, description } = Astro.props;
 <meta name="generator" content={Astro.generator} />
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+<!-- <meta http-equiv="refresh" content={`0;url=/${defaultLang}/`} /> -->
 <slot />
 <title>Research Portal {`| ${title}`}</title>
 

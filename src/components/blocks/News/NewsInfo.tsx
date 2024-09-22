@@ -1,16 +1,26 @@
+import type { NewsItem } from "@/context/news.context";
+import { extractLangFromUri, translateUri } from "@/i18n/utils";
 import { cn } from "@/lib/utils";
-import type { CollectionEntry } from "astro:content";
 import { format } from "date-fns";
-import { CalendarIcon, ClockIcon, LinkIcon, NewspaperIcon } from "lucide-react";
-import React from "react";
+import {
+  CalendarIcon,
+  ClockIcon,
+  LinkIcon,
+  NewspaperIcon,
+  UserPenIcon,
+} from "lucide-react";
 
 interface NewsInfoProps {
-  article: CollectionEntry<"news">;
+  newsItem: NewsItem;
   minutesRead?: number;
   className?: string;
 }
 
-function NewsInfo({ article, minutesRead, className }: NewsInfoProps) {
+function NewsInfo({ newsItem, minutesRead, className }: NewsInfoProps) {
+  const { article, author } = newsItem;
+
+  const [lang] = extractLangFromUri(article.slug);
+
   return (
     <div className={cn("flex flex-col gap-1 font-mono text-sm", className)}>
       <div className="flex items-start justify-start gap-3">
@@ -21,6 +31,16 @@ function NewsInfo({ article, minutesRead, className }: NewsInfoProps) {
           className="inline-flex items-center gap-1.5 text-muted-foreground transition hover:text-foreground hover:underline"
         >
           {`${article.data.source.name}`}
+          <LinkIcon className="size-3" />
+        </a>
+      </div>
+      <div className="flex items-start justify-start gap-3">
+        <UserPenIcon className="size-4 shrink-0" />
+        <a
+          href={translateUri(`/team/${author.slug}`, lang)}
+          className="inline-flex items-center gap-1.5 text-muted-foreground transition hover:text-foreground hover:underline"
+        >
+          {`${author?.data.firstname} ${author?.data.lastname}`}
           <LinkIcon className="size-3" />
         </a>
       </div>

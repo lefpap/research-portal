@@ -1,0 +1,31 @@
+---
+import LegalLayout from "@/layouts/LegalLayout.astro";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+  const legal = await getCollection("legal");
+
+  return legal.map((page) => {
+    const [lang, ...slug] = page.slug.split("/");
+    const paths = {
+      params: {
+        lang,
+        slug: slug.join("/"),
+      },
+      props: {
+        page,
+      },
+    };
+
+    return paths;
+  });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const { Content } = await page.render();
+---
+
+<LegalLayout title={page.slug} legal={page}>
+  <Content />
+</LegalLayout>

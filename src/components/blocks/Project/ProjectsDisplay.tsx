@@ -6,6 +6,7 @@ import {
 import ProjectsGrid from "@/components/blocks/Project/ProjectsGrid";
 import ProjectFilters from "./ProjectFilters";
 import { useProjectsCtx } from "@/hooks/useProjectsCtx.hook";
+import { useTranslations } from "@/i18n/utils";
 
 interface ProjectDisplayProps extends Omit<ProjectProviderProps, "children"> {
   className?: string;
@@ -13,16 +14,11 @@ interface ProjectDisplayProps extends Omit<ProjectProviderProps, "children"> {
 
 function ProjectsDisplay({
   initialProjectItems,
-  authors,
-  tags,
+  lang,
   className,
 }: ProjectDisplayProps) {
   return (
-    <ProjectProvider
-      initialProjectItems={initialProjectItems}
-      authors={authors}
-      tags={tags}
-    >
+    <ProjectProvider initialProjectItems={initialProjectItems} lang={lang}>
       <div
         className={cn(
           "flex flex-col items-stretch justify-between gap-5 md:flex-row",
@@ -43,12 +39,13 @@ function ProjectsDisplay({
 }
 
 function ProjectItemsDisplay({ className }: { className?: string }) {
-  const { projectItems } = useProjectsCtx();
+  const { projectItems, lang } = useProjectsCtx();
+  const t = useTranslations(lang);
 
   if (projectItems.length === 0) {
     return (
       <p className="text-center text-sm text-muted-foreground">
-        No projects to display
+        {t("component.projects-display.empty")}
       </p>
     );
   }

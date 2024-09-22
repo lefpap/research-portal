@@ -1,0 +1,38 @@
+---
+import type { GetStaticPaths } from "astro";
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+import { fetchAllNews } from "@/lib/utils.collections";
+
+export const getStaticPaths = (async () => {
+  const newsItems = await fetchAllNews({
+    filters: [({ data }) => data.status === "published"],
+  });
+
+  return newsItems.map((item) => {
+    const [lang, ...slug] = item.article.slug.split("/");
+    const paths = {
+      params: {
+        lang,
+        slug: slug.join("/"),
+      },
+      props: {
+        newsItem: item,
+      },
+    };
+
+    return paths;
+  });
+}) satisfies GetStaticPaths;
+
+const { newsItem } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await newsItem.article.render();
+const minutesRead = remarkPluginFrontmatter.minutesRead as number;
+---
+
+<ArticleLayout
+  title={newsItem.article.slug}
+  newsItem={newsItem}
+  minutesRead={minutesRead}
+>
+  <Content />
+</ArticleLayout>

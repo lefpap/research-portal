@@ -17,8 +17,6 @@ function readValue<T>(key: string, initialValue: T | (() => T)) {
       return raw as T;
     }
 
-    console.log(error);
-
     if (initialValue instanceof Function) {
       return initialValue();
     }

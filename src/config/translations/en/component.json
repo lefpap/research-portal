@@ -1,0 +1,18 @@
+{
+  "component.news-display.empty": "No news to display",
+  "component.news-filters.search.placeholder": "Search news...",
+  "component.news-filters.authors.label": "Authors",
+  "component.news-filters.tags.label": "Tags",
+
+  "component.projects-display.empty": "No projects to display",
+  "component.projects-filters.search.placeholder": "Search projects...",
+  "component.projects-filters.authors.label": "Authors",
+  "component.projects-filters.tags.label": "Tags",
+
+  "component.publications-display.empty": "No publications to display",
+  "component.publications-filters.search.placeholder": "Search publications...",
+  "component.publications-filters.authors.label": "Authors",
+  "component.publications-filters.tags.label": "Tags",
+
+  "component.footer.button.back-to-top": "Back to top"
+}

@@ -1,0 +1,171 @@
+---
+import { Button } from "@/components/ui/button";
+import NewsCarousel from "@/components/blocks/News/NewsCarousel";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { ArrowRightIcon } from "lucide-react";
+import ProjectCard from "@/components/blocks/Project/ProjectCard";
+import PublicationCard from "@/components/blocks/Publication/PublicationCard";
+import { languages } from "@/i18n/config";
+import type { GetStaticPaths } from "astro";
+import {
+  extractLangFromUri,
+  translateUri,
+  useTranslations,
+} from "@/i18n/utils";
+import {
+  fetchFeaturedProjects,
+  fetchFeaturedPublications,
+  fetchLatestNews,
+} from "@/lib/utils.collections";
+import { FEATURED_PROJECTS, FEATURED_PUBLICATIONS } from "@/config/consts";
+
+export const getStaticPaths = (async () => {
+  const paths = Object.keys(languages).map((lang) => ({
+    params: { lang },
+  }));
+
+  return paths;
+}) satisfies GetStaticPaths;
+
+const [lang] = extractLangFromUri(Astro.url);
+
+const latestNews = await fetchLatestNews({ limit: 3, lang });
+
+const featuredProjects = await fetchFeaturedProjects({
+  featured: FEATURED_PROJECTS,
+  lang,
+});
+
+const featuredPublications = await fetchFeaturedPublications({
+  featured: FEATURED_PUBLICATIONS,
+  lang,
+});
+
+const t = useTranslations(lang);
+---
+
+<BaseLayout title="Home">
+  <!-- Hero Section -->
+  <section class="grid min-h-screen place-items-center">
+    <div class="container flex flex-col">
+      <h1 class="text-center text-6xl font-bold tracking-tight">
+        {t("page.home.title")}
+      </h1>
+      <p
+        class="mt-6 max-w-3xl text-center text-lg font-medium leading-relaxed text-muted-foreground"
+      >
+        {t("page.home.subtitle")}
+      </p>
+
+      <!-- Link to Team Page -->
+      <a href={translateUri("/team", lang)} class="mt-8 self-center"
+        ><Button size={"lg"} variant={"default"}
+          >{t("page.home.button.team")}</Button
+        ></a
+      >
+    </div>
+  </section>
+
+  <!-- Latest News Section -->
+  <section class="mt-11">
+    <div class="container">
+      <div class="flex items-baseline justify-between">
+        <h2 class="text-3xl font-black">
+          {t("page.home.heading.latest-news")}
+        </h2>
+        <a href={translateUri("/news", lang)}>
+          <Button
+            variant={"link"}
+            className="flex items-center justify-center gap-3 hover:animate-pulse"
+          >
+            {t("page.home.button.news")}
+            <ArrowRightIcon className="size-4" />
+          </Button>
+        </a>
+      </div>
+      {
+        latestNews.length > 0 ? (
+          <NewsCarousel
+            newsItems={latestNews}
+            className="mt-8"
+            client:visible
+          />
+        ) : (
+          <p class="my-5 text-muted-foreground">
+            {t("page.home.text.empty-news")}
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- Featured Research -->
+  <section class="mt-11">
+    <div class="container">
+      <div class="flex items-baseline justify-between">
+        <h2 class="text-3xl font-black">
+          {t("page.home.heading.featured-projects")}
+        </h2>
+        <a href={translateUri("/projects", lang)}>
+          <Button
+            variant={"link"}
+            className="flex items-center justify-center gap-3 hover:animate-pulse"
+          >
+            {t("page.home.button.projects")}
+            <ArrowRightIcon className="size-4" />
+          </Button>
+        </a>
+      </div>
+      <ul class="mt-8 grid items-stretch gap-5">
+        {
+          featuredProjects.length > 0 ? (
+            featuredProjects.map((project) => (
+              <li class="overflow-hidden">
+                <ProjectCard projectItem={project} client:visible />
+              </li>
+            ))
+          ) : (
+            <p class="my-5 text-muted-foreground">
+              {t("page.home.text.empty-projects")}
+            </p>
+          )
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Featured Publications -->
+  <section class="mt-11">
+    <div class="container">
+      <div class="flex items-baseline justify-between">
+        <h2 class="text-3xl font-black">
+          {t("page.home.heading.featured-publications")}
+        </h2>
+        <a href={translateUri("/publications", lang)}>
+          <Button
+            variant={"link"}
+            className="flex items-center justify-center gap-3 hover:animate-pulse"
+          >
+            {t("page.home.button.publications")}
+            <ArrowRightIcon className="size-4" />
+          </Button>
+        </a>
+      </div>
+      <ul class="mt-8 grid items-stretch gap-5">
+        {
+          featuredPublications.length > 0 ? (
+            featuredPublications.map((publication) => (
+              <li class="overflow-hidden">
+                <PublicationCard publicationItem={publication} client:visible />
+              </li>
+            ))
+          ) : (
+            <p class="my-5 text-muted-foreground">
+              {t("page.home.text.empty-publications")}
+            </p>
+          )
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

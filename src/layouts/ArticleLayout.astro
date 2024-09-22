@@ -1,20 +1,26 @@
 ---
 import type { ComponentProps } from "astro/types";
 import BaseLayout from "./BaseLayout.astro";
-import type { CollectionEntry } from "astro:content";
 import { ChevronLeftIcon } from "lucide-react";
 import NewsInfo from "@/components/blocks/News/NewsInfo";
 import GoBackButton from "@/components/utility/GoBackButton";
 import { Image } from "astro:assets";
-import ArticlePlaceholderImage from "@/content/news/article-placeholder.png";
+import ArticlePlaceholderImage from "@/content/news/_images/_placeholder.png";
+import { extractLangFromUri, useTranslations } from "@/i18n/utils";
+import type { NewsItem } from "@/context/news.context";
 
 interface Props extends ComponentProps<typeof BaseLayout> {
   // Add props here
-  article: CollectionEntry<"news">;
+  newsItem: NewsItem;
   minutesRead: number;
 }
 
-const { article, minutesRead, ...rest } = Astro.props;
+const { newsItem, minutesRead, ...rest } = Astro.props;
+
+const { article } = newsItem;
+
+const [lang] = extractLangFromUri(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <BaseLayout {...rest}>
@@ -26,7 +32,7 @@ const { article, minutesRead, ...rest } = Astro.props;
       client:visible
     >
       <ChevronLeftIcon className="size-4" />
-      Go Back
+      {t("page.news-article.button.go-back")}
     </GoBackButton>
     <article
       class="prose prose-stone max-w-none dark:prose-invert md:prose-lg lg:prose-xl"
@@ -40,7 +46,7 @@ const { article, minutesRead, ...rest } = Astro.props;
           class="mt-3 size-full max-h-96 rounded-lg border bg-muted bg-cover object-cover"
         />
         <h1>{article.data.title}</h1>
-        <NewsInfo article={article} minutesRead={minutesRead} client:load />
+        <NewsInfo newsItem={newsItem} minutesRead={minutesRead} client:load />
         <p>{article.data.summary}</p>
       </header>
 

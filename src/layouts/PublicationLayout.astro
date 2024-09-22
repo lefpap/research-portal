@@ -5,11 +5,10 @@ import BaseLayout from "./BaseLayout.astro";
 import type { CollectionEntry } from "astro:content";
 import { ChevronLeftIcon } from "lucide-react";
 import PublicationInfo from "@/components/blocks/Publication/PublicationInfo";
-import { Button } from "@/components/ui/button";
 import GoBackButton from "@/components/utility/GoBackButton";
+import { extractLangFromUri, useTranslations } from "@/i18n/utils";
 
 interface Props extends ComponentProps<typeof BaseLayout> {
-  // Add props here
   publication: CollectionEntry<"publications">;
   minutesRead: number;
 }
@@ -24,6 +23,9 @@ const publicationItem = {
   publication,
   authors,
 };
+
+const [lang] = extractLangFromUri(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <BaseLayout {...rest}>
@@ -35,7 +37,7 @@ const publicationItem = {
       client:visible
     >
       <ChevronLeftIcon className="size-4" />
-      Go Back
+      {t("page.publication.button.go-back")}
     </GoBackButton>
     <article
       class="prose prose-stone max-w-none overflow-hidden dark:prose-invert md:prose-lg lg:prose-xl"
@@ -47,7 +49,6 @@ const publicationItem = {
           publicationItem={publicationItem}
           client:load
         />
-        <h2>Abstract</h2>
         <p class="lead">{publication.data.summary}</p>
       </header>
       <main class="mt-11">

@@ -1,0 +1,39 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, getEntry } from "astro:content";
+import PublicationLayout from "@/layouts/PublicationLayout.astro";
+
+export const getStaticPaths = (async () => {
+  const publications = await getCollection(
+    "publications",
+    ({ data }) => data.status === "published",
+  );
+
+  return publications.map((publication) => {
+    const [lang, ...slug] = publication.slug.split("/");
+    const paths = {
+      params: {
+        lang,
+        slug: slug.join("/"),
+      },
+      props: {
+        publication,
+      },
+    };
+
+    return paths;
+  });
+}) satisfies GetStaticPaths;
+
+const { publication } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await publication.render();
+const minutesRead = remarkPluginFrontmatter.minutesRead as number;
+---
+
+<PublicationLayout
+  title={publication.slug}
+  publication={publication}
+  minutesRead={minutesRead}
+>
+  <Content />
+</PublicationLayout>

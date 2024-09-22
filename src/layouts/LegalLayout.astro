@@ -5,6 +5,7 @@ import type { CollectionEntry } from "astro:content";
 import { ChevronLeftIcon } from "lucide-react";
 import GoBackButton from "@/components/utility/GoBackButton";
 import { format } from "date-fns";
+import { extractLangFromUri, useTranslations } from "@/i18n/utils";
 
 interface Props extends ComponentProps<typeof BaseLayout> {
   // Add props here
@@ -13,6 +14,9 @@ interface Props extends ComponentProps<typeof BaseLayout> {
 }
 
 const { legal, ...rest } = Astro.props;
+
+const [lang] = extractLangFromUri(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <BaseLayout {...rest}>
@@ -24,7 +28,7 @@ const { legal, ...rest } = Astro.props;
       client:visible
     >
       <ChevronLeftIcon className="size-4" />
-      Go Back
+      {t("page.legal.button.go-back")}
     </GoBackButton>
     <article
       class="prose prose-stone max-w-none overflow-hidden dark:prose-invert md:prose-lg lg:prose-xl"
