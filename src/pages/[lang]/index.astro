@@ -5,19 +5,19 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { ArrowRightIcon } from "lucide-react";
 import ProjectCard from "@/components/blocks/Project/ProjectCard";
 import PublicationCard from "@/components/blocks/Publication/PublicationCard";
-import { languages } from "@/i18n/config";
+import { languages } from "@/config/i18n.config";
 import type { GetStaticPaths } from "astro";
 import {
   extractLangFromUri,
   translateUri,
   useTranslations,
-} from "@/i18n/utils";
+} from "@/lib/i18n.utils";
 import {
   fetchFeaturedProjects,
   fetchFeaturedPublications,
   fetchLatestNews,
-} from "@/lib/utils.collections";
-import { FEATURED_PROJECTS, FEATURED_PUBLICATIONS } from "@/config/consts";
+} from "@/lib/collection.utils";
+import { FEATURED_PROJECTS, FEATURED_PUBLICATIONS } from "@/config/app.config";
 
 export const getStaticPaths = (async () => {
   const paths = Object.keys(languages).map((lang) => ({

@@ -5,18 +5,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDownIcon } from "lucide-react";
-import { cn, normalizePath } from "@/lib/utils";
-import {
-  extractLangFromUri,
-  useTranslations,
-  translateUri,
-} from "@/i18n/utils";
-import type { HrefLink, MenuLink, SubLink } from "@/config/consts";
+import { cn, normalizePath } from "@/lib/app.utils";
+import { extractLangFromUri, translateUri } from "@/lib/i18n.utils";
+import type { HrefLink, MenuLink } from "@/config/types";
 
 const isHrefLink = (link: HrefLink | MenuLink): link is HrefLink =>
   "href" in link;
 
-const isHrefLinkActive = (link: HrefLink | SubLink, pathname: string) => {
+const isHrefLinkActive = (link: HrefLink, pathname: string) => {
   const [, href] = extractLangFromUri(link.href);
   const [, path] = extractLangFromUri(pathname);
 
@@ -24,7 +20,7 @@ const isHrefLinkActive = (link: HrefLink | SubLink, pathname: string) => {
 };
 
 const isMenuLinkActive = (link: MenuLink, pathname: string) => {
-  return link.links.some((sublink) => isHrefLinkActive(sublink, pathname));
+  return link.items.some((sublink) => isHrefLinkActive(sublink, pathname));
 };
 
 interface NavLinkItemProps {
@@ -48,14 +44,12 @@ function LinkItem({
   className,
   activeClasses,
 }: {
-  link: HrefLink | SubLink;
+  link: HrefLink;
   className?: string;
   activeClasses?: string;
 }) {
   const isActive = isHrefLinkActive(link, window.location.pathname);
-
   const [lang] = extractLangFromUri(window.location.pathname);
-  const t = useTranslations(lang);
 
   return (
     <a
@@ -66,7 +60,7 @@ function LinkItem({
         isActive && activeClasses,
       )}
     >
-      {t(`nav-link.${link.code}`)}
+      {link.name[lang]}
     </a>
   );
 }
@@ -76,7 +70,6 @@ function MenuLinkItem({ link }: { link: MenuLink }) {
   const isActive = isMenuLinkActive(link, pathname);
 
   const [lang] = extractLangFromUri(window.location.pathname);
-  const t = useTranslations(lang);
 
   return (
     <DropdownMenu>
@@ -86,7 +79,7 @@ function MenuLinkItem({ link }: { link: MenuLink }) {
           { "font-bold": isActive },
         )}
       >
-        {t(`nav-link.${link.code}`)}
+        {link.name[lang]}
         <ChevronDownIcon
           className="ml-2 size-3.5 transition group-data-[state=open]:-rotate-180"
           strokeWidth={isActive ? 3 : 2}
@@ -97,7 +90,7 @@ function MenuLinkItem({ link }: { link: MenuLink }) {
         className="flex min-w-[15rem] flex-col p-0"
         align="start"
       >
-        {link.links.map((sublink) => {
+        {link.items.map((sublink) => {
           return (
             <DropdownMenuItem
               key={sublink.code}

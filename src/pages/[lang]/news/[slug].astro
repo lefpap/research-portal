@@ -1,7 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 import ArticleLayout from "@/layouts/ArticleLayout.astro";
-import { fetchAllNews } from "@/lib/utils.collections";
+import { fetchAllNews } from "@/lib/collection.utils";
 
 export const getStaticPaths = (async () => {
   const newsItems = await fetchAllNews({

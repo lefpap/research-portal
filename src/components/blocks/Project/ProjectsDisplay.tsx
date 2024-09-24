@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/app.utils";
 import {
   ProjectProvider,
   type ProjectProviderProps,
@@ -6,7 +6,7 @@ import {
 import ProjectsGrid from "@/components/blocks/Project/ProjectsGrid";
 import ProjectFilters from "./ProjectFilters";
 import { useProjectsCtx } from "@/hooks/useProjectsCtx.hook";
-import { useTranslations } from "@/i18n/utils";
+import { useTranslations } from "@/lib/i18n.utils";
 
 interface ProjectDisplayProps extends Omit<ProjectProviderProps, "children"> {
   className?: string;

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import type { CollectionEntry } from "astro:content";
 import { isToday, subDays, subMonths, subYears, isAfter } from "date-fns";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/app.utils";
 import TagsToggleGroup from "@/components/utility/TagsToggleGroup";
 import TimeToggleGroup from "@/components/utility/TimeToggleGroup";
 import SearchInput from "@/components/utility/SearchInput";
 import { usePublicationsCtx } from "@/hooks/usePublicationsCtx.hook";
 import AuthorsToggleGroup from "@/components/utility/AuthorsToggleGroup";
-import { useTranslations } from "@/i18n/utils";
+import { useTranslations } from "@/lib/i18n.utils";
 
 interface PublicationFilters {
   search?: string;

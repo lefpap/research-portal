@@ -1,9 +1,9 @@
 ---
 import PublicationsDisplay from "@/components/blocks/Publication/PublicationsDisplay";
-import { languages } from "@/i18n/config";
-import { extractLangFromUri, useTranslations } from "@/i18n/utils";
+import { languages } from "@/config/i18n.config";
+import { extractLangFromUri, useTranslations } from "@/lib/i18n.utils";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { fetchAllPublications } from "@/lib/utils.collections";
+import { fetchAllPublications } from "@/lib/collection.utils";
 import type { GetStaticPaths } from "astro";
 
 export const getStaticPaths = (async () => {

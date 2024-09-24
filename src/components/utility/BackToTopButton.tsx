@@ -1,5 +1,5 @@
 import { Button, type ButtonProps } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/app.utils";
 
 interface BackToTopButtonProps extends Omit<ButtonProps, "onClick"> {}
 

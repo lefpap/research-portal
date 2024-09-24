@@ -1,10 +1,11 @@
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
-import { type Lang, defaultLang } from "@/i18n/config";
-import { slugWitoutLang, type WithoutLang } from "@/i18n/utils";
+import { type Lang, defaultLang } from "@/config/i18n.config";
+import { slugWitoutLang } from "@/lib/i18n.utils";
 import type { ProjectItem } from "@/context/project.context";
 import type { PublicationItem } from "@/context/publication.context";
-import { extractLangFromUri } from "@/i18n/utils";
+import { extractLangFromUri } from "@/lib/i18n.utils";
 import type { NewsItem } from "@/context/news.context";
+import type { WithoutLang } from "@/config/types";
 
 export const fetchLatestNews = async ({
   limit,

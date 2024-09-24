@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { LinkIcon } from "lucide-react";
 import type { ProjectItem } from "@/context/project.context";
 import ProjectInfo from "@/components/blocks/Project/ProjectInfo";
-import { extractLangFromUri, translateUri } from "@/i18n/utils";
+import { extractLangFromUri, translateUri } from "@/lib/i18n.utils";
 
 interface ProjectCardProps {
   projectItem: ProjectItem;

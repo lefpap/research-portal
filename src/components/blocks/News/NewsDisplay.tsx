@@ -1,9 +1,9 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/app.utils";
 import NewsGrid from "./NewsGrid";
 import NewsFilters from "./NewsFilters";
 import { NewsProvider, type NewsProviderProps } from "@/context/news.context";
 import { useNewsCtx } from "@/hooks/useNewsCtx.hook";
-import { useTranslations } from "@/i18n/utils";
+import { useTranslations } from "@/lib/i18n.utils";
 
 interface NewsDisplayProps extends Omit<NewsProviderProps, "children"> {
   className?: string;

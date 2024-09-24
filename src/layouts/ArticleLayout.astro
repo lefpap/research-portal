@@ -6,7 +6,7 @@ import NewsInfo from "@/components/blocks/News/NewsInfo";
 import GoBackButton from "@/components/utility/GoBackButton";
 import { Image } from "astro:assets";
 import ArticlePlaceholderImage from "@/content/news/_images/_placeholder.png";
-import { extractLangFromUri, useTranslations } from "@/i18n/utils";
+import { extractLangFromUri, useTranslations } from "@/lib/i18n.utils";
 import type { NewsItem } from "@/context/news.context";
 
 interface Props extends ComponentProps<typeof BaseLayout> {

@@ -1,5 +1,5 @@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/app.utils";
 
 interface TimeToggleGroupProps {
   className?: string;

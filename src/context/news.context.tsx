@@ -1,4 +1,4 @@
-import { defaultLang, type Lang } from "@/i18n/config";
+import { defaultLang, type Lang } from "@/config/i18n.config";
 import type { CollectionEntry } from "astro:content";
 import { createContext, useMemo, useState } from "react";
 

@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/app.utils";
 import {
   Card,
   CardContent,
@@ -10,7 +10,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import NewsInfo from "./NewsInfo";
 import ArticlePlaceHolderImage from "@/content/news/_images/_placeholder.png";
-import { extractLangFromUri, translateUri } from "@/i18n/utils";
+import { extractLangFromUri, translateUri } from "@/lib/i18n.utils";
 import type { NewsItem } from "@/context/news.context";
 
 interface NewsCardProps {

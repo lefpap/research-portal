@@ -1,11 +1,10 @@
 ---
 import ProjectsDisplay from "@/components/blocks/Project/ProjectsDisplay";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { type CollectionEntry } from "astro:content";
 import type { GetStaticPaths } from "astro";
-import { languages } from "@/i18n/config";
-import { extractLangFromUri, useTranslations } from "@/i18n/utils";
-import { fetchAllProjects } from "@/lib/utils.collections";
+import { languages } from "@/config/i18n.config";
+import { extractLangFromUri, useTranslations } from "@/lib/i18n.utils";
+import { fetchAllProjects } from "@/lib/collection.utils";
 
 export const getStaticPaths = (async () => {
   const paths = Object.keys(languages).map((lang) => ({

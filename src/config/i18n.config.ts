@@ -5,5 +5,5 @@ export const languages = {
 
 export type Lang = keyof typeof languages;
 
-export const showDefaultLang = true;
-export const defaultLang = "en";
+export const showDefaultLang = true; // not supported yet
+export const defaultLang = "el" as const;

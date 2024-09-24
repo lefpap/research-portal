@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/app.utils";
 import {
   Drawer,
   DrawerClose,
@@ -13,7 +13,7 @@ import MobileLinkItem from "@/components/blocks/Header/Link/MobileLink";
 import ThemeToggle from "@/components/utility/ThemeToggle";
 import { MenuIcon, SearchIcon, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { NAV_LINKS } from "@/config/consts";
+import { NAV_LINKS } from "@/config/app.config";
 
 interface NavMenuProps {
   className?: string;

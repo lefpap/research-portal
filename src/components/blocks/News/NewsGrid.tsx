@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/app.utils";
 import NewsCard from "@/components/blocks/News/NewsCard";
 import type { NewsItem } from "@/context/news.context";
 

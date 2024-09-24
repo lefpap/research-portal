@@ -1,8 +1,8 @@
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 import ClipboardCopy from "@/components/utility/ClipboardCopy";
 import type { PublicationItem } from "@/context/publication.context";
-import { extractLangFromUri, translateUri } from "@/i18n/utils";
-import { cn } from "@/lib/utils";
+import { extractLangFromUri, translateUri } from "@/lib/i18n.utils";
+import { cn } from "@/lib/app.utils";
 import { format } from "date-fns";
 import {
   CalendarIcon,

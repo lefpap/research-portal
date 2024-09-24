@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/app.utils";
 import ProjectCard from "@/components/blocks/Project/ProjectCard";
 import type { ProjectItem } from "@/context/project.context";
 

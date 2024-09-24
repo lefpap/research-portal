@@ -6,7 +6,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import NewsCard from "./NewsCard";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/app.utils";
 import type { NewsItem } from "@/context/news.context";
 
 interface NewsCarouselProps {

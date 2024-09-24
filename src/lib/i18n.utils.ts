@@ -1,5 +1,6 @@
-import { defaultLang, languages, showDefaultLang } from "@/i18n/config";
+import { defaultLang, languages, showDefaultLang } from "@/config/i18n.config";
 import { translations } from "@/config/translations/index";
+import type { WithoutLang } from "@/config/types";
 import type { CollectionEntry, CollectionKey } from "astro:content";
 
 // Declare overload signatures
@@ -64,10 +65,6 @@ export function translateUri(
 
   return translatedPath;
 }
-
-export type WithoutLang<T extends string> = T extends `${string}/${infer Slug}`
-  ? Slug
-  : T;
 
 export function slugWitoutLang<
   T extends CollectionEntry<CollectionKey>["slug"],

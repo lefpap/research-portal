@@ -1,6 +1,6 @@
 import NavLinkItem from "../Link/NavLink";
-import { cn } from "@/lib/utils";
-import { NAV_LINKS } from "@/config/consts";
+import { cn } from "@/lib/app.utils";
+import { NAV_LINKS } from "@/config/app.config";
 
 interface NavMenuProps {
   className?: string;

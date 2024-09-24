@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/app.utils";
 import PublicationsGrid from "@/components/blocks/Publication/PublicationsGrid";
 import PublicationFilters from "@/components/blocks/Publication/PublicationFilters";
 import {
@@ -6,7 +6,7 @@ import {
   type PublicationProviderProps,
 } from "@/context/publication.context";
 import { usePublicationsCtx } from "@/hooks/usePublicationsCtx.hook";
-import { useTranslations } from "@/i18n/utils";
+import { useTranslations } from "@/lib/i18n.utils";
 
 interface PublicationsDisplayProps
   extends Omit<PublicationProviderProps, "children"> {

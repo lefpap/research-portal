@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import TagsToggleGroup from "../../utility/TagsToggleGroup";
 import AuthorsToggleGroup from "@/components/utility/AuthorsToggleGroup";
 import SearchInput from "@/components/utility/SearchInput";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/app.utils";
 import { useProjectsCtx } from "@/hooks/useProjectsCtx.hook";
 import type { CollectionEntry } from "astro:content";
-import { useTranslations } from "@/i18n/utils";
+import { useTranslations } from "@/lib/i18n.utils";
 
 interface ProjectFiltersProps {
   className?: string;

@@ -6,7 +6,7 @@ import type { CollectionEntry } from "astro:content";
 import { ChevronLeftIcon } from "lucide-react";
 import PublicationInfo from "@/components/blocks/Publication/PublicationInfo";
 import GoBackButton from "@/components/utility/GoBackButton";
-import { extractLangFromUri, useTranslations } from "@/i18n/utils";
+import { extractLangFromUri, useTranslations } from "@/lib/i18n.utils";
 
 interface Props extends ComponentProps<typeof BaseLayout> {
   publication: CollectionEntry<"publications">;

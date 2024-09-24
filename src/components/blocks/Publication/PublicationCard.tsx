@@ -10,8 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { LinkIcon } from "lucide-react";
 import type { PublicationItem } from "@/context/publication.context";
 import PublicationInfo from "@/components/blocks/Publication/PublicationInfo";
-import { cn } from "@/lib/utils";
-import { extractLangFromUri, translateUri } from "@/i18n/utils";
+import { cn } from "@/lib/app.utils";
+import { extractLangFromUri, translateUri } from "@/lib/i18n.utils";
 
 interface PublicationCardProps {
   publicationItem: PublicationItem;

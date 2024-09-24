@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { languages } from "@/i18n/config";
-import { extractLangFromUri } from "@/i18n/utils";
-import { cn } from "@/lib/utils";
+import { languages } from "@/config/i18n.config";
+import { extractLangFromUri } from "@/lib/i18n.utils";
+import { cn } from "@/lib/app.utils";
 
 interface LanguageSwitcherProps {
   className?: string;

@@ -4,17 +4,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { cn, normalizePath } from "@/lib/utils";
-import type { HrefLink, MenuLink, SubLink } from "@/config/consts";
-import {
-  extractLangFromUri,
-  translateUri,
-  useTranslations,
-} from "@/i18n/utils";
+import { cn, normalizePath } from "@/lib/app.utils";
+import type { HrefLink, MenuLink } from "@/config/types";
+import { extractLangFromUri, translateUri } from "@/lib/i18n.utils";
 
 const isHrefLink = (link: HrefLink | MenuLink) => "href" in link;
 
-const isHrefLinkActive = (link: HrefLink | SubLink, pathname: string) => {
+const isHrefLinkActive = (link: HrefLink, pathname: string) => {
   const [, href] = extractLangFromUri(link.href);
   const [, path] = extractLangFromUri(pathname);
 
@@ -22,7 +18,7 @@ const isHrefLinkActive = (link: HrefLink | SubLink, pathname: string) => {
 };
 
 const isMenuLinkActive = (link: MenuLink, pathname: string) => {
-  return link.links.some((sublink) => isHrefLinkActive(sublink, pathname));
+  return link.items.some((sublink) => isHrefLinkActive(sublink, pathname));
 };
 
 interface MobileLinkItemProps {
@@ -42,14 +38,13 @@ function LinkItem({
   className,
   activeClasses,
 }: {
-  link: HrefLink | SubLink;
+  link: HrefLink;
   className?: string;
   activeClasses?: string;
 }) {
   const isActive = isHrefLinkActive(link, window.location.pathname);
 
   const [lang] = extractLangFromUri(window.location.pathname);
-  const t = useTranslations(lang);
 
   return (
     <a
@@ -60,7 +55,7 @@ function LinkItem({
         isActive && activeClasses,
       )}
     >
-      {t(`nav-link.${link.code}`)}
+      {link.name[lang]}
     </a>
   );
 }
@@ -69,7 +64,6 @@ function MenuLinkItem({ link }: { link: MenuLink }) {
   const isActive = isMenuLinkActive(link, window.location.pathname);
 
   const [lang] = extractLangFromUri(window.location.pathname);
-  const t = useTranslations(lang);
 
   return (
     <Accordion type="single" collapsible className="w-full">
@@ -79,10 +73,10 @@ function MenuLinkItem({ link }: { link: MenuLink }) {
             "font-extrabold text-foreground": isActive,
           })}
         >
-          {t(`nav-link.${link.code}`)}
+          {link.name[lang]}
         </AccordionTrigger>
         <AccordionContent>
-          {link.links.map((sublink) => (
+          {link.items.map((sublink) => (
             <LinkItem
               key={sublink.code}
               link={sublink}

@@ -2,14 +2,14 @@
 import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import AuthorPlaceholderImage from "@/content/authors/_images/_placeholder.png";
-import { languages } from "@/i18n/config";
+import { languages } from "@/config/i18n.config";
 import type { GetStaticPaths } from "astro";
 import {
   extractLangFromUri,
   translateUri,
   useTranslations,
-} from "@/i18n/utils";
-import { fetchAllAuthors } from "@/lib/utils.collections";
+} from "@/lib/i18n.utils";
+import { fetchAllAuthors } from "@/lib/collection.utils";
 
 export const getStaticPaths = (async () => {
   const paths = Object.keys(languages).map((lang) => ({

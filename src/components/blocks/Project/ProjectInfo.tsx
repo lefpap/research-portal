@@ -1,6 +1,6 @@
 import type { ProjectItem } from "@/context/project.context";
-import { extractLangFromUri, translateUri } from "@/i18n/utils";
-import { cn } from "@/lib/utils";
+import { extractLangFromUri, translateUri } from "@/lib/i18n.utils";
+import { cn } from "@/lib/app.utils";
 import {
   ExternalLinkIcon,
   GlobeIcon,

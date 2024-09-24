@@ -1,11 +1,11 @@
 import TagsToggleGroup from "../../utility/TagsToggleGroup";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/app.utils";
 import TimeToggleGroup from "@/components/utility/TimeToggleGroup";
 import SearchInput from "@/components/utility/SearchInput";
 import { useEffect, useState } from "react";
 import { isToday, subDays, subMonths, subYears, isAfter } from "date-fns";
 import { useNewsCtx } from "@/hooks/useNewsCtx.hook";
-import { useTranslations } from "@/i18n/utils";
+import { useTranslations } from "@/lib/i18n.utils";
 import AuthorsToggleGroup from "@/components/utility/AuthorsToggleGroup";
 
 interface NewsFiltersProps {

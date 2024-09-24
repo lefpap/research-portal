@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/app.utils";
 import PublicationCard from "./PublicationCard";
 import type { PublicationItem } from "@/context/publication.context";
 

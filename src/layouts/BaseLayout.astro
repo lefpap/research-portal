@@ -4,7 +4,7 @@ import BaseHead from "@/layouts/BaseHead.astro";
 import Header from "@/components/blocks/Header/Header";
 import Footer from "@/components/blocks/Footer.astro";
 
-import { extractLangFromUri } from "@/i18n/utils";
+import { extractLangFromUri } from "@/lib/i18n.utils";
 
 interface Props extends ComponentProps<typeof BaseHead> {
   layoutClasses?: string;
