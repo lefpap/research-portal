@@ -8,9 +8,10 @@ import { extractLangFromUri } from "@/lib/i18n.utils";
 
 interface Props extends ComponentProps<typeof BaseHead> {
   layoutClasses?: string;
+  is404?: boolean;
 }
 
-const { title, description, layoutClasses } = Astro.props;
+const { title, description, layoutClasses, is404 } = Astro.props;
 
 const [lang] = extractLangFromUri(Astro.url);
 ---
@@ -20,10 +21,10 @@ const [lang] = extractLangFromUri(Astro.url);
     <BaseHead title={title} description={description} />
   </head>
   <body class="grid min-h-screen grid-rows-[auto_1fr_auto]">
-    <Header client:only="react" />
+    {!is404 && <Header client:only="react" />}
     <main class:list={["my-11", layoutClasses]}>
       <slot />
     </main>
-    <Footer />
+    {!is404 && <Footer />}
   </body>
 </html>
