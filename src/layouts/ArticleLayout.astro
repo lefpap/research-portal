@@ -7,17 +7,20 @@ import GoBackButton from "@/components/utility/GoBackButton";
 import { Image } from "astro:assets";
 import ArticlePlaceholderImage from "@/content/news/_images/_placeholder.png";
 import { extractLangFromUri, useTranslations } from "@/lib/i18n.utils";
-import type { NewsItem } from "@/context/news.context";
+import { getEntry, type CollectionEntry } from "astro:content";
 
 interface Props extends ComponentProps<typeof BaseLayout> {
   // Add props here
-  newsItem: NewsItem;
+  article: CollectionEntry<"news">;
   minutesRead: number;
 }
 
-const { newsItem, minutesRead, ...rest } = Astro.props;
+const { article, minutesRead, ...rest } = Astro.props;
 
-const { article } = newsItem;
+const newsItem = {
+  article,
+  author: await getEntry("authors", article.data.author.slug),
+};
 
 const [lang] = extractLangFromUri(Astro.url);
 const t = useTranslations(lang);
