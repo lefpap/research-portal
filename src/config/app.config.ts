@@ -62,10 +62,11 @@ export const NAV_LINKS = [
 ] as const satisfies NavLink[];
 
 export const FEATURED_PROJECTS: FeaturedProject[] = [
-  "project-01",
-  "project-02",
+  "algorithms-deep-learning-npl",
+  "big-data-predictive-analysis",
 ] as const satisfies FeaturedProject[];
 
 export const FEATURED_PUBLICATIONS: FeaturedPublication[] = [
-  "pub-00",
+  "deep-learning-npl",
+  "optimizing-neural-networks",
 ] as const satisfies FeaturedPublication[];

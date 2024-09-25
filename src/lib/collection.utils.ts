@@ -226,6 +226,9 @@ export const fetchWorkExperienceByAuthor = async ({
     author = await getEntry("authors", author);
   }
 
+  // Add a filter at the start to only include education entries for the author
+  filters.unshift(({ data }) => data.author.slug === author.slug);
+
   // Add a filter at the start to only include work experience entries for the author
   const authorWorkExperience = await getCollection("work-experience", (work) =>
     filters.every((filter) => filter(work)),
