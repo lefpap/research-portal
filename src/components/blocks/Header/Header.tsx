@@ -23,7 +23,7 @@ function Header() {
   return (
     <header
       className={cn("sticky top-0 z-50 transition", {
-        "border-b saturate-100 backdrop-blur-md": isScrolled,
+        "border-b bg-accent/40 saturate-200 backdrop-blur-md": isScrolled,
       })}
     >
       <div className="container flex items-center justify-between gap-5 py-6">
