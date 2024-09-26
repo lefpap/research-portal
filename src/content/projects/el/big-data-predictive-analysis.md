@@ -7,9 +7,9 @@ authors:
 externalAuthors:
   - name: "Δρ. Κώστας Παναγιωτίδης"
 tags:
-  - "Μεγάλα Δεδομένα"
-  - "Προγνωστική Ανάλυση"
-  - "Επιστήμη Δεδομένων"
+  - "Big Data"
+  - "Predictive Analytics"
+  - "Data Science"
 repo: "https://github.com/maria-ioannou/big-data-predictive-analysis"
 ---
 

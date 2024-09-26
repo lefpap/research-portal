@@ -5,9 +5,9 @@ status: "published"
 authors:
   - "el/maria-ioannou"
 tags:
-  - "Οπτικοποίηση Δεδομένων"
-  - "Επιχειρηματική Ευφυΐα"
-  - "Επιστήμη Δεδομένων"
+  - "Data Visualization"
+  - "Business Intelligence"
+  - "Data Science"
 repo: "https://github.com/maria-ioannou/data-visualization-bi"
 demo: "https://demo.example.com/data-visualization-bi"
 ---

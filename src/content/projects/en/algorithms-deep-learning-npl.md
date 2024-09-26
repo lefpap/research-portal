@@ -9,8 +9,8 @@ externalAuthors:
     url: "https://example.com/john-smith"
 tags:
   - "Deep Learning"
-  - "Natural Language Processing"
-  - "Artificial Intelligence"
+  - "NLP"
+  - "AI"
 repo: "https://github.com/nikos-papadopoulos/deep-learning-nlp"
 demo: "https://demo.example.com/deep-learning-nlp"
 ---

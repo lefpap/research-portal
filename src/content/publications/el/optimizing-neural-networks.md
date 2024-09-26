@@ -23,9 +23,9 @@ links:
   - name: "Journal Link"
     url: "https://journals.example.com/mlj/volume35/issue4/papadopoulos"
 tags:
-  - "Νευρωνικά Δίκτυα"
-  - "Επεξεργασία Εικόνας"
-  - "Μηχανική Μάθηση"
+  - "Neural Networks"
+  - "Image Processing"
+  - "Machine Learning"
 ---
 
 ## Περίληψη

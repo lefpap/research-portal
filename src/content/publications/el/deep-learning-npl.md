@@ -9,20 +9,20 @@ externalAuthors:
   - name: "Dr. Άννα Παπαδάκη"
     url: "https://example.com/anna-papadaki"
 cite: |
-  "@inproceedings{Papadopoulos2022,
+  @inproceedings{Papadopoulos2022,
     author = {Nikos Papadopoulos and Anna Papadaki},
     title = {Deep Learning in Natural Language Processing},
     booktitle = {Proceedings of the International Conference on Artificial Intelligence},
     year = {2022},
     pages = {123--130}
-  }"
+  }
 links:
   - name: "DOI"
     url: "https://doi.org/10.1234/ai2022.001"
 tags:
-  - "Βαθιά Μάθηση"
-  - "Επεξεργασία Φυσικής Γλώσσας"
-  - "Τεχνητή Νοημοσύνη"
+  - "Deep Learning"
+  - "NLP"
+  - "AI"
 ---
 
 ## Περίληψη

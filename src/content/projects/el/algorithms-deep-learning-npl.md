@@ -8,9 +8,9 @@ externalAuthors:
   - name: "Dr. John Smith"
     url: "https://example.com/john-smith"
 tags:
-  - "Βαθιά Μάθηση"
-  - "Επεξεργασία Φυσικής Γλώσσας"
-  - "Τεχνητή Νοημοσύνη"
+  - "Deep Learning"
+  - "NLP"
+  - "AI"
 repo: "https://github.com/nikos-papadopoulos/deep-learning-nlp"
 demo: "https://demo.example.com/deep-learning-nlp"
 ---
