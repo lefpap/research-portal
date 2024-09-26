@@ -23,6 +23,12 @@ function NewsInfo({ newsItem, minutesRead, className }: NewsInfoProps) {
 
   return (
     <div className={cn("flex flex-col gap-1 font-mono text-sm", className)}>
+      <div className="flex items-start justify-start gap-3 font-mono text-sm">
+        <CalendarIcon className="size-4 shrink-0" />
+        <time className="uppercase text-muted-foreground">
+          {format(article.data.publishedAt, "MMM dd, yyyy")}
+        </time>
+      </div>
       <div className="flex items-start justify-start gap-3">
         <NewspaperIcon className="size-4 shrink-0" />
         <a
@@ -44,12 +50,7 @@ function NewsInfo({ newsItem, minutesRead, className }: NewsInfoProps) {
           <LinkIcon className="size-3" />
         </a>
       </div>
-      <div className="flex items-start justify-start gap-3 font-mono text-sm">
-        <CalendarIcon className="size-4 shrink-0" />
-        <time className="uppercase text-muted-foreground">
-          {format(article.data.publishedAt, "MMM dd, yyyy")}
-        </time>
-      </div>
+
       <div
         className={cn("flex items-start justify-start gap-3", {
           hidden: minutesRead === undefined,
