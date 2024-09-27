@@ -4,6 +4,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { extractLangFromUri, translateUri } from "@/lib/i18n.utils";
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
+import { format } from "date-fns";
 import { FileTextIcon } from "lucide-react";
 
 export const getStaticPaths = (async () => {
@@ -25,15 +26,20 @@ const docs = await getCollection(
 <BaseLayout title="Docs">
   <section>
     <div class="container">
-      <h1 class="text-2xl font-black">Docs</h1>
+      <h1 class="text-2xl font-black">Documentation</h1>
       <ul class="mt-11 space-y-5">
         {
           docs.map((doc) => (
-            <li class="flex items-center justify-start gap-3">
-              <FileTextIcon className="size-4 inline-block" />
-              <a href={translateUri(`/docs/${doc.slug}`, lang)}>
-                {doc.data.title}
-              </a>
+            <li class="flex items-center justify-between gap-5">
+              <dir class="flex items-center justify-start gap-3 font-bold transition-colors hover:text-muted-foreground">
+                <FileTextIcon className="size-4" />
+                <a href={translateUri(`/docs/${doc.slug}`, lang)}>
+                  {doc.data.title}
+                </a>
+              </dir>
+              <time datetime="YYYY-MM-DD" class="text-sm italic">
+                {format(doc.data.publishedAt, "yyyy-MM-dd")}
+              </time>
             </li>
           ))
         }
