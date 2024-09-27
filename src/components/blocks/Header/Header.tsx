@@ -6,6 +6,8 @@ import MobileMenu from "./Menu/MobileMenu";
 import NavMenu from "./Menu/NavMenu";
 import { extractLangFromUri, translateUri } from "@/lib/i18n.utils";
 import { SITE_TITLE } from "@/config/app.config";
+import { FileTextIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,6 +44,19 @@ function Header() {
           <NavMenu className="hidden sm:flex" />
         </div>
         <div className="flex items-center justify-end gap-1">
+          {import.meta.env.DEV && (
+            <Button
+              asChild
+              variant={"outline"}
+              size={"icon"}
+              className="rounded-full"
+            >
+              <a href={translateUri("/docs", lang)} target="_blank">
+                <FileTextIcon className="size-5" />
+              </a>
+            </Button>
+          )}
+
           <ThemeToggle
             variant={"outline"}
             size={"icon"}

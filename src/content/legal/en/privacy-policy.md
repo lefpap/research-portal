@@ -1,6 +1,7 @@
 ---
 title: Privacy Policy
-date: 2024-09-09
+status: published
+publishedAt: 2024-09-09
 ---
 
 ## 1. Introduction

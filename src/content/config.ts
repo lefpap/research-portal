@@ -6,7 +6,7 @@ import {
   ProjectSchema,
   PublicationSchema,
   WorkExperienceSchema,
-  LegalSchema,
+  SimplePageSchema,
 } from "@/content/schema";
 
 const authors = defineCollection({
@@ -41,7 +41,12 @@ const publications = defineCollection({
 
 const legal = defineCollection({
   type: "content",
-  schema: LegalSchema,
+  schema: SimplePageSchema,
+});
+
+const docs = defineCollection({
+  type: "content",
+  schema: SimplePageSchema,
 });
 
 export const collections = {
@@ -52,4 +57,5 @@ export const collections = {
   projects,
   publications,
   legal,
+  docs,
 };

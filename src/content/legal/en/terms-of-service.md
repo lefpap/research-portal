@@ -1,6 +1,7 @@
 ---
 title: Terms of Service
-date: 2024-09-09
+status: published
+publishedAt: 2024-09-09
 ---
 
 ## 1. Introduction

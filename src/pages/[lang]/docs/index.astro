@@ -1,0 +1,43 @@
+---
+import { languages } from "@/config/i18n.config";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { extractLangFromUri, translateUri } from "@/lib/i18n.utils";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import { FileTextIcon } from "lucide-react";
+
+export const getStaticPaths = (async () => {
+  const paths = Object.keys(languages).map((lang) => ({
+    params: { lang },
+  }));
+
+  return paths;
+}) satisfies GetStaticPaths;
+
+const [lang] = extractLangFromUri(Astro.url);
+
+const docs = await getCollection(
+  "docs",
+  ({ slug }) => import.meta.env.DEV && slug.startsWith(lang),
+);
+---
+
+<BaseLayout title="Docs">
+  <section>
+    <div class="container">
+      <h1 class="text-2xl font-black">Docs</h1>
+      <ul class="mt-11 space-y-5">
+        {
+          docs.map((doc) => (
+            <li class="flex items-center justify-start gap-3">
+              <FileTextIcon className="size-4 inline-block" />
+              <a href={translateUri(`/docs/${doc.slug}`, lang)}>
+                {doc.data.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

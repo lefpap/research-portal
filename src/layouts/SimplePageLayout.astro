@@ -9,11 +9,10 @@ import { extractLangFromUri, useTranslations } from "@/lib/i18n.utils";
 
 interface Props extends ComponentProps<typeof BaseLayout> {
   // Add props here
-  legal: CollectionEntry<"legal">;
-  backLink?: string;
+  page: CollectionEntry<"legal" | "docs">;
 }
 
-const { legal, ...rest } = Astro.props;
+const { page, ...rest } = Astro.props;
 
 const [lang] = extractLangFromUri(Astro.url);
 const t = useTranslations(lang);
@@ -34,8 +33,10 @@ const t = useTranslations(lang);
       class="prose prose-stone max-w-none overflow-hidden dark:prose-invert md:prose-lg lg:prose-xl"
     >
       <header>
-        <h1>{legal.data.title}</h1>
-        <time class="font-mono">{format(legal.data.date, "yyyy-MM-dd")}</time>
+        <h1>{page.data.title}</h1>
+        <time class="font-mono"
+          >{format(page.data.publishedAt, "yyyy-MM-dd")}</time
+        >
       </header>
       <main class="mt-11">
         <slot />

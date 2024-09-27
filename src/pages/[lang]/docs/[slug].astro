@@ -4,17 +4,17 @@ import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 
 export const getStaticPaths = (async () => {
-  const legal = await getCollection("legal");
+  const docs = await getCollection("docs", () => import.meta.env.DEV);
 
-  return legal.map((page) => {
-    const [lang, ...slug] = page.slug.split("/");
+  return docs.map((doc) => {
+    const [lang, ...slug] = doc.slug.split("/");
     const paths = {
       params: {
         lang,
         slug: slug.join("/"),
       },
       props: {
-        page,
+        doc,
       },
     };
 
@@ -22,10 +22,10 @@ export const getStaticPaths = (async () => {
   });
 }) satisfies GetStaticPaths;
 
-const { page } = Astro.props;
-const { Content } = await page.render();
+const { doc } = Astro.props;
+const { Content } = await doc.render();
 ---
 
-<SimplePageLayout title={page.slug} page={page}>
+<SimplePageLayout title={doc.data.title} page={doc}>
   <Content />
 </SimplePageLayout>
