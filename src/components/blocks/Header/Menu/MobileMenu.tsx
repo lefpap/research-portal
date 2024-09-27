@@ -11,15 +11,17 @@ import {
 } from "@/components/ui/drawer";
 import MobileLinkItem from "@/components/blocks/Header/Link/MobileLink";
 import ThemeToggle from "@/components/utility/ThemeToggle";
-import { MenuIcon, SearchIcon, XIcon } from "lucide-react";
+import { FileTextIcon, MenuIcon, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NAV_LINKS } from "@/config/app.config";
+import { extractLangFromUri, translateUri } from "@/lib/i18n.utils";
 
 interface NavMenuProps {
   className?: string;
 }
 
 function MobileMenu({ className }: NavMenuProps) {
+  const [lang] = extractLangFromUri(window.location.pathname);
   return (
     <div className={cn("", className)}>
       <Drawer direction="left">
@@ -69,13 +71,18 @@ function MobileMenu({ className }: NavMenuProps) {
           </div>
           <DrawerFooter>
             <div className="flex items-center justify-center gap-1">
-              <Button
-                variant={"outline"}
-                size={"icon"}
-                className="rounded-full"
-              >
-                <SearchIcon className="size-5" />
-              </Button>
+              {import.meta.env.DEV && (
+                <Button
+                  asChild
+                  variant={"outline"}
+                  size={"icon"}
+                  className="rounded-full"
+                >
+                  <a href={translateUri("/docs", lang)} target="_blank">
+                    <FileTextIcon className="size-5" />
+                  </a>
+                </Button>
+              )}
               <ThemeToggle
                 variant={"outline"}
                 size={"icon"}
