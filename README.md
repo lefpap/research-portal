@@ -6,9 +6,8 @@ Rather than a generic portfolio template, this project was developed for a real 
 
 ## Documentation
 
-**Maintaining the website?** Start with the **[Content Authoring Guide](docs/CONTENT_GUIDE.md)** for step-by-step instructions and examples for adding researchers, publications, projects, and news.
-
-The guide covers content collections, Markdown front matter, and the fields required for each content type.
+- **[Content Authoring Guide](docs/CONTENT_GUIDE.md):** For the research team and content editors. Learn how to add researchers, publications, projects, and news with Markdown and front matter.
+- **[Development Guide](docs/DEVELOPMENT_GUIDE.md):** For developers. Set up the project, explore the codebase, configure an editor, and run builds and checks.
 
 ## Features
 
