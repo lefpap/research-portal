@@ -4,6 +4,12 @@ A research group website built as my university thesis project for a professor a
 
 Rather than a generic portfolio template, this project was developed for a real academic use case.
 
+## Documentation
+
+**Maintaining the website?** Start with the **[Content Authoring Guide](docs/CONTENT_GUIDE.md)** for step-by-step instructions and examples for adding researchers, publications, projects, and news.
+
+The guide covers content collections, Markdown front matter, and the fields required for each content type.
+
 ## Features
 
 - **Research publications:** Structured publication entries with authors, citation information, DOI links, and other metadata.
